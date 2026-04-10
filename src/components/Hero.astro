@@ -3,23 +3,27 @@ import AuroraBackground from './AuroraBackground.astro';
 const CALENDLY_URL = '#contact';
 ---
 
-<section class="relative overflow-hidden min-h-screen flex flex-col items-center justify-center text-center px-6 pt-28 pb-24 bg-brand-bg">
+<section class="relative overflow-hidden min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-12 bg-brand-bg">
   <!-- Aurora background -->
   <AuroraBackground />
 
-  <div class="relative z-10 max-w-4xl mx-auto mt-20 md:mt-28">
+  <div class="relative z-10 w-full max-w-6xl mx-auto mt-10 md:mt-14 px-4">
 
-    <!-- Main headline: 20% bigger, generous line-height to prevent overlap -->
-    <h1 class="font-poppins font-bold text-5xl md:text-[4.25rem] lg:text-[5.25rem] text-brand-text leading-[1.18] tracking-tight mb-7">
-      The unfair advantage<br class="hidden md:block" />
-      for project-driven<br class="hidden md:block" />
-      businesses.
+    <!-- Main headline -->
+    <h1 class="font-poppins font-bold text-4xl md:text-[3.5rem] lg:text-[4.5rem] text-brand-text leading-[1.15] tracking-tight mb-6">
+      Your business runs on people<br />
+      doing work that should<br />
+      be automated.
     </h1>
 
     <!-- Subheadline -->
-    <p class="font-inter text-lg md:text-xl text-brand-muted max-w-2xl mx-auto leading-relaxed mb-10">
-      Retiply builds operational systems that turn the daily noise of running
-      a project-based business into clarity, automation, and control.
+    <p class="font-inter text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10" style="color: #222222;">
+      Retiply builds the systems that take manual work off your team's plate — built by people who've spent their careers inside businesses like yours.
+    </p>
+
+    <!-- Caption -->
+    <p class="mb-8 text-3xl md:text-4xl text-brand-text/75" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; letter-spacing: -0.01em;">
+      Built by operators, for operators.
     </p>
 
     <!-- CTA -->
@@ -27,7 +31,7 @@ const CALENDLY_URL = '#contact';
       href={CALENDLY_URL}
       class="inline-flex items-center gap-3 bg-brand-accent text-white rounded-full pl-6 pr-1.5 py-1.5 font-inter font-medium text-base hover:bg-brand-accent-light transition-colors duration-200"
     >
-      Let's Talk
+      Book a free workflow audit
       <span class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -35,9 +39,9 @@ const CALENDLY_URL = '#contact';
       </span>
     </a>
 
-    <!-- Caption -->
-    <p class="mt-10 text-3xl md:text-4xl text-brand-text/75" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; letter-spacing: -0.01em;">
-      Built by operators, for operators.
+    <!-- Trust note -->
+    <p class="mt-4 text-xs font-inter text-brand-muted tracking-wide">
+      No obligation. Confidential.
     </p>
 
   </div>
