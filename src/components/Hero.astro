@@ -1,0 +1,43 @@
+---
+const CALENDLY_URL = '#contact';
+---
+
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-28 pb-24 bg-brand-bg">
+  <div class="max-w-4xl mx-auto">
+
+    <!-- Eyebrow label -->
+    <p class="section-label mb-8">AI Operations Consultancy</p>
+
+    <!-- Main headline -->
+    <h1 class="font-poppins font-bold text-4xl md:text-6xl lg:text-7xl text-brand-text leading-[1.08] tracking-tight mb-7">
+      The unfair advantage<br class="hidden md:block" />
+      for project-driven<br class="hidden md:block" />
+      businesses.
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="font-inter text-lg md:text-xl text-brand-muted max-w-2xl mx-auto leading-relaxed mb-10">
+      Retiply builds operational systems that turn the daily noise of running
+      a project-based business into clarity, automation, and control.
+    </p>
+
+    <!-- CTA -->
+    <a
+      href={CALENDLY_URL}
+      class="inline-flex items-center gap-3 bg-brand-accent text-white rounded-full pl-6 pr-1.5 py-1.5 font-inter font-medium text-base hover:bg-brand-accent-light transition-colors duration-200"
+    >
+      Let's Talk
+      <span class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+
+    <!-- Caption -->
+    <p class="mt-8 text-xs font-inter font-light tracking-wider uppercase text-brand-muted opacity-70">
+      Built by operators, for operators.
+    </p>
+
+  </div>
+</section>

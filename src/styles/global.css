@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F0EDE8;
+    color: #0A0A09;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-[#2D1B8E] text-white px-6 py-3 rounded-full font-inter font-medium text-sm hover:bg-[#4A35C0] transition-colors duration-200;
+  }
+
+  .btn-primary-dark {
+    @apply inline-flex items-center gap-2 bg-white text-[#0A0A09] px-6 py-3 rounded-full font-inter font-medium text-sm hover:bg-[#E8E4DF] transition-colors duration-200;
+  }
+
+  .section-label {
+    @apply text-xs font-inter font-medium tracking-widest uppercase text-[#666666] mb-4;
+  }
+}

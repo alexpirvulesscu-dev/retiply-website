@@ -1,0 +1,53 @@
+---
+const testimonials = [
+  {
+    quote: 'Your testimonial here.',
+    name: 'Client Name',
+    company: 'Company',
+  },
+  {
+    quote: 'Your testimonial here.',
+    name: 'Client Name',
+    company: 'Company',
+  },
+  {
+    quote: 'Your testimonial here.',
+    name: 'Client Name',
+    company: 'Company',
+  },
+];
+---
+
+<section class="py-24 px-6 bg-brand-surface">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Heading -->
+    <div class="mb-14">
+      <p class="section-label">What clients say</p>
+      <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text leading-tight">
+        In their own words.
+      </h2>
+    </div>
+
+    <!-- Testimonial cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {testimonials.map((t) => (
+        <div class="bg-brand-bg rounded-2xl p-8 flex flex-col justify-between min-h-[220px]">
+          <!-- Quote mark -->
+          <div>
+            <span class="font-poppins text-5xl text-brand-accent leading-none select-none">"</span>
+            <p class="font-inter text-brand-text text-base leading-relaxed mt-2 italic opacity-40">
+              {t.quote}
+            </p>
+          </div>
+          <!-- Attribution -->
+          <div class="mt-8 pt-6 border-t border-brand-surface3">
+            <p class="font-inter font-medium text-sm text-brand-text opacity-40">{t.name}</p>
+            <p class="font-inter text-xs text-brand-muted opacity-30">{t.company}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

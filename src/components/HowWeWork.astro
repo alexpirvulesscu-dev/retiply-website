@@ -1,0 +1,87 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Workflow Audit',
+    description:
+      'A free session where we map your current workflows, identify the bottlenecks, and pinpoint exactly where automation can move the needle.',
+  },
+  {
+    number: '02',
+    title: 'Map the Workflow',
+    description:
+      'Together we outline the end-to-end workflow for your business. We decide which steps stay human and which ones get automated.',
+  },
+  {
+    number: '03',
+    title: 'Proposal',
+    description:
+      'A clear scope and fixed price built around your specific workflow. We include alternative approaches so you can choose what fits.',
+  },
+  {
+    number: '04',
+    title: 'Build and Deploy',
+    description:
+      'We build, test, and deploy your system. Weekly updates. A working product, not a deck full of promises.',
+  },
+  {
+    number: '05',
+    title: 'Ongoing Support',
+    description:
+      'Optional retainer for monitoring, optimisation, and iteration. Most clients see compounding returns over time.',
+  },
+];
+---
+
+<section class="py-24 px-6 bg-brand-surface">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Heading -->
+    <div class="mb-14">
+      <p class="section-label">How we work</p>
+      <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text leading-tight">
+        From first conversation<br class="hidden md:block" />
+        to working system.
+      </h2>
+    </div>
+
+    <!-- Steps -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+      {steps.map((step) => (
+        <div class="bg-brand-bg rounded-2xl p-7 relative overflow-hidden">
+          <!-- Faded step number in background -->
+          <span
+            class="absolute top-3 right-4 font-poppins font-bold text-6xl text-brand-text leading-none pointer-events-none select-none"
+            style="opacity: 0.05;"
+          >
+            {step.number}
+          </span>
+
+          <!-- Step number badge -->
+          <span class="inline-block font-inter text-xs font-semibold tracking-widest uppercase text-brand-accent mb-5">
+            {step.number}
+          </span>
+
+          <!-- Title -->
+          <h3 class="font-poppins font-semibold text-base text-brand-text mb-3 leading-snug">
+            {step.title}
+          </h3>
+
+          <!-- Description -->
+          <p class="font-inter text-sm text-brand-muted leading-relaxed">
+            {step.description}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- USP note -->
+    <div class="mt-12 p-8 bg-brand-bg rounded-2xl border border-brand-surface3">
+      <p class="font-inter text-brand-muted text-sm leading-relaxed max-w-3xl">
+        <span class="font-semibold text-brand-text">Our approach is different.</span>
+        {' '}Most agencies sell you a list of deliverables. We map your actual workflow first. Then we decide together which parts make sense to automate. You stay in control. We handle the complexity.
+      </p>
+    </div>
+
+  </div>
+</section>

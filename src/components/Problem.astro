@@ -1,0 +1,56 @@
+---
+const painPoints = [
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z"/></svg>`,
+    heading: 'Decisions made on gut feel',
+    body: 'The numbers are always late, always somewhere else, always incomplete. So you make expensive calls based on feel.',
+  },
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
+    heading: 'AI sounds great in theory',
+    body: 'You keep hearing about AI and what it can do. But when it comes to your business, it just feels complicated and out of reach.',
+  },
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    heading: 'Jobs that bleed money silently',
+    body: 'By the time anyone notices a job went wrong, the margin is gone. Nobody saw it coming because nobody had a clear view.',
+  },
+];
+---
+
+<section class="py-24 px-6 bg-brand-surface">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Heading -->
+    <div class="mb-16">
+      <p class="section-label">The problem</p>
+      <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text max-w-xl leading-tight">
+        Sound familiar?
+      </h2>
+    </div>
+
+    <!-- Pain point cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      {painPoints.map((point) => (
+        <div class="bg-brand-bg rounded-2xl p-8">
+          <div class="text-brand-accent mb-5" set:html={point.icon} />
+          <h3 class="font-poppins font-semibold text-lg text-brand-text mb-3">
+            {point.heading}
+          </h3>
+          <p class="font-inter text-brand-muted text-sm leading-relaxed">
+            {point.body}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Closing statement -->
+    <div class="border-t border-brand-surface3 pt-12">
+      <p class="font-poppins font-semibold text-xl md:text-2xl text-brand-text max-w-2xl">
+        The real cost is not the chaos.
+        <span class="text-brand-accent"> It is the decisions you are making blind.</span>
+      </p>
+    </div>
+
+  </div>
+</section>

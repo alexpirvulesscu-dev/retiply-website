@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Problem from '../components/Problem.astro';
+import Services from '../components/Services.astro';
+import HowWeWork from '../components/HowWeWork.astro';
+import WhyRetiply from '../components/WhyRetiply.astro';
+import SocialProof from '../components/SocialProof.astro';
+import CTABand from '../components/CTABand.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Nav />
+
+  <main>
+    <!-- 1. Hero -->
+    <Hero />
+
+    <!-- 2. Problem -->
+    <div id="problem">
+      <Problem />
+    </div>
+
+    <!-- 3. Services -->
+    <div id="services">
+      <Services />
+    </div>
+
+    <!-- 4. How We Work -->
+    <div id="how-we-work">
+      <HowWeWork />
+    </div>
+
+    <!-- 5. Why Retiply / About -->
+    <div id="about">
+      <WhyRetiply />
+    </div>
+
+    <!-- 6. Social Proof -->
+    <SocialProof />
+
+    <!-- 7. CTA Band + Contact anchor -->
+    <CTABand />
+  </main>
+
+  <Footer />
+</BaseLayout>

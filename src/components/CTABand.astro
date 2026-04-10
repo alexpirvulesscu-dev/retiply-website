@@ -1,0 +1,35 @@
+---
+const CALENDLY_URL = '#contact';
+---
+
+<!-- CTA Band: brand accent deep navy instead of black -->
+<section id="contact" class="py-28 px-6 bg-brand-accent">
+  <div class="max-w-3xl mx-auto text-center">
+
+    <h2 class="font-poppins font-bold text-3xl md:text-5xl lg:text-6xl text-white leading-tight mb-6">
+      Ready to stop guessing?
+    </h2>
+
+    <p class="font-inter text-white/70 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+      Book a free 30-minute workflow audit. We will map your operations,
+      find the bottlenecks, and show you exactly where AI can move the needle.
+    </p>
+
+    <a
+      href={CALENDLY_URL}
+      class="inline-flex items-center gap-3 bg-white text-brand-accent rounded-full pl-6 pr-1.5 py-1.5 font-inter font-medium text-base hover:bg-brand-bg transition-colors duration-200"
+    >
+      Let's Talk
+      <span class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center flex-shrink-0">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+
+    <p class="mt-6 font-inter text-xs text-white/40 tracking-wide uppercase">
+      No pitch. Just a real conversation.
+    </p>
+
+  </div>
+</section>
