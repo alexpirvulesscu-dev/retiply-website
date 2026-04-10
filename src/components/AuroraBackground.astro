@@ -1,0 +1,86 @@
+---
+// No props — self-contained aurora background layer
+---
+
+<div class="aurora-root">
+  <div class="aurora-layer"></div>
+</div>
+
+<style>
+  .aurora-root {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .aurora-layer {
+    position: absolute;
+    inset: -10px;
+    opacity: 0.45;
+    will-change: transform;
+    pointer-events: none;
+
+    --retiply-purple: #9B7FF0;
+    --electric-blue:  #6B9FF8;
+    --soft-purple:    #D4A8F8;
+    --white:          #ffffff;
+    --transparent:    transparent;
+
+    background-image:
+      repeating-linear-gradient(
+        100deg,
+        var(--white) 0%, var(--white) 7%,
+        var(--transparent) 10%, var(--transparent) 12%,
+        var(--white) 16%
+      ),
+      repeating-linear-gradient(
+        100deg,
+        var(--retiply-purple) 10%,
+        var(--soft-purple)    18%,
+        var(--electric-blue)  25%,
+        var(--soft-purple)    32%,
+        var(--retiply-purple) 40%
+      );
+
+    background-size: 300%, 200%;
+    background-position: 50% 50%, 50% 50%;
+
+    filter: blur(10px) invert(1);
+    animation: aurora 120s linear infinite;
+
+    mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 75%);
+  }
+
+  .aurora-layer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        100deg,
+        var(--white) 0%, var(--white) 7%,
+        var(--transparent) 10%, var(--transparent) 12%,
+        var(--white) 16%
+      ),
+      repeating-linear-gradient(
+        100deg,
+        var(--retiply-purple) 10%,
+        var(--soft-purple)    18%,
+        var(--electric-blue)  25%,
+        var(--soft-purple)    32%,
+        var(--retiply-purple) 40%
+      );
+    background-size: 200%, 100%;
+    background-attachment: fixed;
+    mix-blend-mode: difference;
+    animation: aurora 120s linear infinite;
+  }
+
+  @keyframes aurora {
+    from { background-position: 50% 50%, 50% 50%; }
+    to   { background-position: 350% 50%, 350% 50%; }
+  }
+</style>

@@ -1,3 +1,5 @@
+import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'],
@@ -18,7 +20,24 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
+      animation: {
+        aurora: 'aurora 60s linear infinite',
+      },
+      keyframes: {
+        aurora: {
+          from: { backgroundPosition: '50% 50%, 50% 50%' },
+          to:   { backgroundPosition: '350% 50%, 350% 50%' },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [addVariablesForColors],
 };
+
+function addVariablesForColors({ addBase, theme }) {
+  const allColors = flattenColorPalette(theme('colors'));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+  addBase({ ':root': newVars });
+}
