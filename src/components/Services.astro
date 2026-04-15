@@ -1,103 +1,62 @@
 ---
-const CALENDLY_URL = '#contact';
+import StackingCards from './StackingCards.jsx';
 
-// 6 services in a clean 3x2 grid — Timesheets merged into Reporting & Dashboards
 const services = [
   {
     title: 'Finance & P&L Automation',
-    tags: ['Cash Flow Visibility', 'Invoice Automation', 'Job Profitability'],
+    description: 'Know exactly where your money is. Every day. Without touching a spreadsheet.',
+    tags: ['Invoice Automation', 'Job Profitability', 'Cash Flow Visibility'],
     gradient: 'linear-gradient(135deg, #0f0839 0%, #2D1B8E 100%)',
   },
   {
-    title: 'Reporting & Dashboards',
-    tags: ['Business Intelligence', 'Timesheet Tracking', 'Live Dashboards'],
+    title: 'Reports & Dashboards',
+    description: 'One screen that shows you everything. Updated automatically. No chasing.',
+    tags: ['Live Dashboards', 'Timesheet Tracking', 'Business Intelligence'],
     gradient: 'linear-gradient(135deg, #111827 0%, #1e3a5f 100%)',
   },
   {
+    title: 'Operations & Job Tracking',
+    description: 'Every job, every person, every milestone — visible in one place without chasing anyone.',
+    tags: ['Job Scheduling', 'Resource Allocation', 'Milestone Tracking', 'Client Updates', 'Progress Reporting'],
+    gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+  },
+  {
+    title: 'HR Onboarding',
+    description: 'Every new hire set up, equipped, and ready — without anyone managing a checklist manually.',
+    tags: ['Offer Trigger Automation', 'IT Provisioning', 'Document Signing', 'Training Scheduling', '30-60-90 Day Check-ins'],
+    gradient: 'linear-gradient(135deg, #1a0533 0%, #3b0764 100%)',
+  },
+  {
+    title: 'Document Management',
+    description: 'Every document classified, filed, and findable the moment it arrives — with no one touching it.',
+    tags: ['Contract Routing', 'Purchase Orders', 'Compliance Documents', 'Auto-filing', 'Audit Trails'],
+    gradient: 'linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 100%)',
+  },
+  {
     title: 'Lead Generation & Pipeline',
-    tags: ['CRM Automation', 'Outreach Automation', 'Pipeline Tracking'],
+    description: 'Never lose a lead again. Follow-ups happen automatically. Your team only talks to the hot ones.',
+    tags: ['CRM Setup', 'Automated Outreach', 'Pipeline Tracking'],
     gradient: 'linear-gradient(135deg, #13002e 0%, #3b0764 100%)',
   },
   {
     title: 'Marketing & Sales Automation',
+    description: 'Your sales process runs even when you\'re on site. Quotes go out. Leads get nurtured. Jobs get closed.',
     tags: ['Email Sequences', 'Follow-up Systems', 'Sales Workflows'],
     gradient: 'linear-gradient(135deg, #0d1117 0%, #1a2234 100%)',
   },
   {
-    title: 'AI Training',
+    title: 'AI Training for Your Team',
+    description: 'We show your staff which AI tools save the most time — and exactly how to use them.',
     tags: ['Team Workshops', 'AI Roadmapping', 'Tool Selection'],
     gradient: 'linear-gradient(135deg, #0a1a0a 0%, #1a3d1a 100%)',
   },
   {
-    title: 'Frontend Experience',
-    tags: ['Custom Web Apps', 'Landing Pages', 'Interactive Demos'],
+    title: 'Websites & Web Tools',
+    description: 'Pages that bring in leads and tools that make your team\'s job easier.',
+    tags: ['Landing Pages', 'Custom Web Apps', 'Interactive Demos'],
     gradient: 'linear-gradient(135deg, #1a0a0f 0%, #3a1429 100%)',
   },
 ];
 ---
 
-<section class="py-24 px-6 bg-brand-bg">
-  <div class="max-w-7xl mx-auto">
-
-    <!-- Heading -->
-    <div class="mb-14">
-      <p class="section-label">What we do</p>
-      <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text max-w-xl leading-tight">
-        Every part of your operations, handled.
-      </h2>
-    </div>
-
-    <!-- Services grid: 3 columns x 2 rows -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-      {services.map((service) => (
-        <div
-          class="service-card relative rounded-2xl p-8 min-h-[220px] flex flex-col justify-between overflow-hidden group cursor-default"
-          style={`background: ${service.gradient};`}
-        >
-          <!-- Title -->
-          <h3 class="font-poppins font-semibold text-xl text-white leading-snug relative z-10">
-            {service.title}
-          </h3>
-
-          <!-- Tags -->
-          <div class="flex flex-wrap gap-2 relative z-10">
-            {service.tags.map((tag) => (
-              <span class="text-xs font-inter font-medium text-white/80 bg-white/10 border border-white/15 px-3 py-1 rounded-full">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <!-- CTA after services -->
-    <div class="text-center pt-4">
-      <p class="font-inter text-brand-muted text-sm mb-6">
-        Not sure where to start? We will figure it out together.
-      </p>
-      <a
-        href={CALENDLY_URL}
-        class="inline-flex items-center gap-3 bg-brand-accent text-white rounded-full pl-6 pr-1.5 py-1.5 font-inter font-medium text-sm hover:bg-brand-accent-light transition-colors duration-200"
-      >
-        Let's Talk
-        <span class="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<style>
-  .service-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .service-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
-  }
-</style>
+<StackingCards client:visible cards={services} />

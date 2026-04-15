@@ -1,0 +1,26 @@
+---
+import AuroraBackground from './AuroraBackground.astro';
+import WorkflowDiagram from './WorkflowDiagram.jsx';
+---
+
+<section class="relative overflow-hidden bg-brand-bg py-14 px-4">
+  <!-- Same aurora layer as hero -->
+  <AuroraBackground />
+
+  <!-- Same dot grid as hero -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="z-index: 2; background-image: radial-gradient(circle, rgba(0,0,0,0.07) 1px, transparent 1px); background-size: 28px 28px;"
+  ></div>
+
+  <!-- Heading + diagram -->
+  <div class="relative z-10 w-full max-w-6xl mx-auto">
+    <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text max-w-4xl leading-tight mb-4">
+      Your team is chasing invoices, copying data, and building the same reports every week. That's hours of money going nowhere.
+    </h2>
+    <p class="font-poppins font-bold text-2xl md:text-4xl text-brand-accent mb-10">
+      We fix that. Fast. Without disrupting how you run things.
+    </p>
+    <WorkflowDiagram client:visible />
+  </div>
+</section>
