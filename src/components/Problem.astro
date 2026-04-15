@@ -1,46 +1,37 @@
 ---
 const painPoints = [
   {
-    stat: '15+ hours/week',
-    heading: 'Your team is doing work a computer should be doing.',
-    body: 'Invoice chasing. Data entry. Copy-paste from one spreadsheet to another. Answering the same questions over and over. That\'s your best people — wasting their best hours.',
+    heading: 'Your staff are doing<br />robot work.',
+    body: 'Every day, your team copies, pastes, chases, and checks the same things. By hand. That is not what you hired them for. That is not what they are good at. And every hour they spend on it is an hour not spent on work that actually grows your business.',
   },
   {
-    stat: 'Always late',
-    heading: 'By the time you see your numbers, it\'s too late to act.',
-    body: 'Your P&L is two weeks old. You don\'t know which jobs made money and which ones didn\'t. You\'re guessing on pricing. And every bad decision compounds quietly.',
+    heading: 'Things are falling through the gaps.',
+    body: 'A missed email. A late invoice. A job that slipped through with no follow-up. It is not because your team is bad. It is because humans forget. The busier things get, the more gets dropped. And every dropped thing costs you money, or a customer.',
   },
   {
-    stat: 'Every month. Every year.',
-    heading: 'You\'ve been meaning to fix this for 3 years.',
-    body: 'The business grows. The admin grows with it. But there\'s never a right time to stop and sort it. So nothing changes — and your margin quietly disappears.',
+    heading: 'You cannot grow without hiring more people.',
+    body: 'Every time the business gets busier, you need another pair of hands just to keep up. So the business grows but the profit does not. You are stuck — too busy to change anything, too stretched to scale properly. It does not have to work this way.',
   },
 ];
 ---
 
-<section class="py-24 px-6 bg-brand-surface">
+<section class="relative py-24 px-6 bg-brand-surface">
   <div class="max-w-7xl mx-auto">
 
     <!-- Heading -->
     <div class="mb-16">
       <p class="section-label">Sound familiar?</p>
-      <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text max-w-xl leading-tight">
-        You already know something's broken. You just haven't had time to fix it.
+      <h2 class="font-inter font-bold text-2xl md:text-3xl text-brand-text leading-tight mb-6">
+        Your business is busy.<br />But busy is not the same as working.
       </h2>
     </div>
 
     <!-- Pain point cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
       {painPoints.map((point) => (
-        <div class="bg-brand-bg rounded-2xl p-8 flex flex-col">
-          <!-- Stat — dominant element -->
-          <p class="font-poppins font-bold text-4xl md:text-5xl text-brand-accent leading-none mb-5">
-            {point.stat}
-          </p>
+        <div class="pain-card rounded-2xl p-8 flex flex-col" style="background: rgba(255,255,255,0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.80);">
           <!-- Card headline -->
-          <h3 class="font-poppins font-semibold text-lg text-brand-text mb-3">
-            {point.heading}
-          </h3>
+          <h3 class="font-poppins font-semibold text-xl text-brand-accent mb-4 leading-snug" set:html={point.heading} />
           <!-- Card body -->
           <p class="font-inter text-brand-muted text-sm leading-relaxed">
             {point.body}
@@ -49,13 +40,27 @@ const painPoints = [
       ))}
     </div>
 
-    <!-- Closing statement — unchanged -->
+    <!-- Closing statement -->
     <div class="border-t border-brand-surface3 pt-12">
-      <p class="font-poppins font-semibold text-xl md:text-2xl text-brand-text max-w-2xl">
+      <p class="font-poppins font-semibold text-xl md:text-2xl text-brand-text">
         The real cost is not the chaos.
-        <span class="text-brand-accent"> It is the decisions you are making blind.</span>
+        <span class="text-brand-accent"> It is the decisions you <span class="whitespace-nowrap">are making blind.</span></span>
       </p>
     </div>
 
   </div>
+
+  <!-- Section transition gradient -->
+  <div aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-20 pointer-events-none" style="background: linear-gradient(to bottom, transparent, #F0EDE8);"></div>
 </section>
+
+<style>
+  .pain-card {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: default;
+  }
+  .pain-card:hover {
+    transform: scale(1.025);
+    box-shadow: 0 0 0 2px rgba(45,27,142,0.35), 0 8px 32px rgba(45,27,142,0.10);
+  }
+</style>

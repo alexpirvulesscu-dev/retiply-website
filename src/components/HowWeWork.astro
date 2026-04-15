@@ -33,13 +33,13 @@ const steps = [
 ];
 ---
 
-<section class="py-24 px-6 bg-brand-surface">
+<section class="relative py-24 px-6 bg-brand-surface">
   <div class="max-w-7xl mx-auto">
 
     <!-- Heading -->
     <div class="mb-14">
       <p class="section-label">How we work</p>
-      <h2 class="font-poppins font-bold text-3xl md:text-5xl text-brand-text leading-tight">
+      <h2 class="font-inter font-bold text-2xl md:text-3xl text-brand-text leading-tight">
         From first conversation<br class="hidden md:block" />
         to working system.
       </h2>
@@ -49,38 +49,52 @@ const steps = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
       {steps.map((step) => (
         <div class="bg-brand-bg rounded-2xl p-7 relative overflow-hidden">
-          <!-- Faded step number in background -->
+          <!-- Large faded step number — brand blue-purple, overlapping card text slightly -->
           <span
-            class="absolute top-3 right-4 font-poppins font-bold text-6xl text-brand-text leading-none pointer-events-none select-none"
-            style="opacity: 0.05;"
+            class="absolute -top-2 right-2 font-poppins font-bold leading-none pointer-events-none select-none"
+            style="font-size: 9rem; color: rgba(45,27,142,0.10); line-height: 1;"
           >
             {step.number}
           </span>
 
-          <!-- Step number badge -->
-          <span class="inline-block font-inter text-xs font-semibold tracking-widest uppercase text-brand-accent mb-5">
-            {step.number}
-          </span>
-
           <!-- Title -->
-          <h3 class="font-poppins font-semibold text-base text-brand-text mb-3 leading-snug">
+          <h3 class="font-poppins font-semibold text-lg text-brand-accent mb-3 leading-snug relative z-10 mt-10">
             {step.title}
           </h3>
 
           <!-- Description -->
-          <p class="font-inter text-sm text-brand-muted leading-relaxed">
+          <p class="font-inter text-sm text-brand-muted leading-relaxed relative z-10">
             {step.description}
           </p>
         </div>
       ))}
     </div>
 
-    <!-- USP note -->
-    <div class="mt-12 p-8 bg-brand-bg rounded-2xl border border-brand-surface3">
-      <p class="font-inter text-brand-muted text-sm leading-relaxed">
-        We don't sell you a stack of software and leave. We map your actual business first — then build what fits. Most clients see results inside the first month.
-      </p>
+    <!-- Quote block — dark statement style -->
+    <div class="mt-14 relative overflow-hidden rounded-[2rem]" style="background: #0f172a; border-left: 3px solid rgba(45,27,142,0.75);">
+      <!-- Oversized decorative opening quote mark -->
+      <div
+        class="absolute font-poppins font-bold text-white pointer-events-none select-none"
+        style="font-size: 180px; opacity: 0.05; top: -20px; left: 20px; line-height: 1;"
+        aria-hidden="true"
+      >"</div>
+
+      <!-- Subtle depth gradient overlay -->
+      <div
+        class="absolute inset-0 pointer-events-none"
+        style="background: radial-gradient(ellipse at 15% 85%, rgba(45,27,142,0.12) 0%, transparent 55%), radial-gradient(ellipse at 85% 15%, rgba(30,27,75,0.18) 0%, transparent 55%);"
+      ></div>
+
+      <!-- Quote text -->
+      <div class="relative z-10 px-12 py-8">
+        <p class="font-inter font-medium text-white leading-relaxed italic text-lg md:text-xl">
+          "We don't sell you a stack of software and leave. We map your actual business first — then build what fits. Most clients see results inside the first month."
+        </p>
+      </div>
     </div>
 
   </div>
+
+  <!-- Section transition gradient -->
+  <div aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-20 pointer-events-none" style="background: linear-gradient(to bottom, transparent, #F0EDE8);"></div>
 </section>

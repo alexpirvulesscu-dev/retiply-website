@@ -1,323 +1,257 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 
-// ─── Dimensions ───────────────────────────────────────────────────────────────
-const NW = 175; // node width
-const NH = 64;  // node height (taller to fit sub-label)
+// ─── Canvas dimensions ────────────────────────────────────────────────────────
+// ViewBox: 1380 × 480  (node labels extend ~72px below each box)
+// Node box: 90 × 90, rx=11, centred on (cx, cy)
+// Connection handles: r=5 circles at (cx±45, cy)
 
-// ─── Layout ───────────────────────────────────────────────────────────────────
-// Column left-edge x (220px left-to-left spacing):
-//   col0=20  col1=240  col2=460  col3=680  col4=900  col5=1120
+const NB = 45; // half node-box side (90/2)
+
+// ─── Nodes ────────────────────────────────────────────────────────────────────
+// Trunk:   Trigger (left-centre)
+// Top:     Fetch → Filter → Enrich → AI  (row ~cy=85)
+// Bottom:  RunLogic → Format             (row ~cy=380)
+// Merge:   Merge Results                 (centre-right, cy=232)
+// Deliver: Deliver to Destination        (right, cy=235)
+// Branches: Confirm (success) / Alert (error)
 //
-// Row centre y (140px row spacing, trunk on row1):
-//   row0(success) cy=70    node.y=38
-//   row1(trunk)   cy=210   node.y=178
-//   row2(error)   cy=350   node.y=318
-//
-// ViewBox: 1320 × 410
+// Nodes are staggered ±10-15px off their row baseline for an organic feel.
 const NODES = [
-  // Trunk
-  { id: 0, label: 'Trigger',             sub: 'Starts the run',        type: 'trigger', x: 20,   y: 178 },
-  { id: 1, label: 'Parse Input',         sub: 'Reads & structures',    type: 'logic',   x: 240,  y: 178 },
-  { id: 2, label: 'Process & Transform', sub: 'Maps & transforms',     type: 'logic',   x: 460,  y: 178 },
-  { id: 3, label: 'Check Result',        sub: 'Validates output',      type: 'branch',  x: 680,  y: 178 },
-  // Branch A — SUCCESS
-  { id: 4, label: 'Deliver Output',      sub: 'Sends to destination',  type: 'success', x: 900,  y: 38  },
-  { id: 5, label: 'Confirm & Log',       sub: 'Records audit trail',   type: 'success', x: 1120, y: 38  },
-  // Branch B — ERROR
-  { id: 6, label: 'Log Failure',         sub: 'Captures the error',    type: 'error',   x: 900,  y: 318 },
-  { id: 7, label: 'Alert & Escalate',    sub: 'Notifies the team',     type: 'error',   x: 1120, y: 318 },
+  { id: 0,  label: 'Webhook Trigger',      sub: 'webhook entry point',    icon: '⚡', color: '#EA6A1F', cx: 80,   cy: 232 },
+  { id: 1,  label: 'Fetch Records',        sub: 'database query',         icon: '⬇', color: '#0D9488', cx: 268,  cy: 80  },
+  { id: 2,  label: 'Filter & Limit',       sub: 'filter & deduplicate',   icon: '⚗', color: '#4F46E5', cx: 454,  cy: 93  },
+  { id: 3,  label: 'Enrich Data',          sub: 'add context & metadata', icon: '✦', color: '#4338CA', cx: 640,  cy: 78  },
+  { id: 4,  label: 'AI Summarise',         sub: 'smart processing',       icon: '◈', color: '#7C3AED', cx: 826,  cy: 90  },
+  { id: 5,  label: 'Run Logic Check',      sub: 'conditional rules',      icon: '◇', color: '#4F46E5', cx: 268,  cy: 382 },
+  { id: 6,  label: 'Format Output',        sub: 'structure & clean',      icon: '≡', color: '#64748B', cx: 454,  cy: 370 },
+  { id: 7,  label: 'Merge Results',        sub: 'combine branches',       icon: '⇒', color: '#334155', cx: 978,  cy: 232 },
+  { id: 8,  label: 'Deliver to Dest.',     sub: 'push to output',         icon: '→', color: '#334155', cx: 1155, cy: 235 },
+  { id: 9,  label: 'Confirm & Log',        sub: 'record success',         icon: '✓', color: '#059669', cx: 1308, cy: 84  },
+  { id: 10, label: 'Alert Team',           sub: 'notify & escalate',      icon: '!', color: '#DC2626', cx: 1308, cy: 382 },
 ];
 
-// ─── Paths — ALL cubic bezier C, no L/line/polyline ──────────────────────────
-// Node right edges:  col0=195  col1=415  col2=635  col3=855  col4=1075  col5=1295
-// Row centres:       row0=70   row1=210  row2=350
-//
-// Trunk (same row, gap=45px): symmetric 22px handles — gentle barely-there curve
-// Branches (sigmoid): C (end_x, start_y), (start_x, end_y) end_x end_y
-//   — exits horizontally from source, arrives horizontally at target
+// ─── Paths — ALL cubic bezier C, zero L/line/polyline ────────────────────────
+// Right handle of source: cx+NB
+// Left handle of target:  cx-NB
+// Same-row (slight stagger): C midX startY, midX endY end
+// Sigmoid branch: C endX startY, startX endY end
 const PATHS = [
-  // Trunk
-  'M 195 210 C 217 210, 217 210, 240 210',            // 0  Trigger → Parse Input
-  'M 415 210 C 437 210, 437 210, 460 210',            // 1  Parse → Process & Transform
-  'M 635 210 C 657 210, 657 210, 680 210',            // 2  Process → Check Result
-  // Branching connectors — sigmoid S-curves
-  'M 855 206 C 900 206, 855 70,  900 70',             // 3  Check → Deliver Output (up)
-  'M 855 214 C 900 214, 855 350, 900 350',            // 4  Check → Log Failure (down)
-  // Within SUCCESS branch
-  'M 1075 70  C 1097 70,  1097 70,  1120 70',         // 5  Deliver → Confirm & Log
-  // Within ERROR branch
-  'M 1075 350 C 1097 350, 1097 350, 1120 350',        // 6  Log Failure → Alert & Escalate
+  // Trunk fanning out from Trigger
+  'M 125 232 C 223 232, 123 80,  223 80',    // 0  Trigger → Fetch
+  'M 125 232 C 223 232, 123 382, 223 382',   // 1  Trigger → RunLogic
+  // Top path  (same row, gentle stagger curves)
+  'M 313 80  C 361 80,  361 93,  409 93',    // 2  Fetch → Filter
+  'M 499 93  C 547 93,  547 78,  595 78',    // 3  Filter → Enrich
+  'M 685 78  C 733 78,  733 90,  781 90',    // 4  Enrich → AI
+  // Convergence into Merge
+  'M 871 90  C 933 90,  871 232, 933 232',   // 5  AI → Merge  (sigmoid down)
+  // Bottom path
+  'M 313 382 C 361 382, 361 370, 409 370',   // 6  RunLogic → Format
+  'M 499 370 C 716 370, 716 232, 933 232',   // 7  Format → Merge  (long arc up)
+  // Trunk continues
+  'M 1023 232 C 1066 232, 1066 235, 1110 235', // 8  Merge → Deliver
+  // Deliver branches
+  'M 1200 235 C 1263 235, 1200 84,  1263 84',  // 9  Deliver → Confirm  (sigmoid up)
+  'M 1200 235 C 1263 235, 1200 382, 1263 382', // 10 Deliver → Alert    (sigmoid down)
 ];
 
-// ─── Branch labels ────────────────────────────────────────────────────────────
-// Bezier midpoint at t=0.5 for sigmoid M 855 206 C 900 206 855 70 900 70:
-//   B(0.5).x ≈ (1/8·855 + 3/8·900 + 3/8·855 + 1/8·900) = 871
-//   B(0.5).y ≈ (1/8·206 + 3/8·206 + 3/8·70  + 1/8·70)  ≈ 138
-// SUCCESS label above curve → y ≈ 121
-// ERROR midpt y ≈ 282, label below curve → y ≈ 299
-const BRANCH_LABELS = [
-  { pathIdx: 3, x: 871, y: 121, text: 'SUCCESS', color: '#059669' },
-  { pathIdx: 4, x: 871, y: 303, text: 'ERROR',   color: '#DC2626' },
+// ─── Item count labels ────────────────────────────────────────────────────────
+// Bezier midpoint at t=0.5: B = 1/8·P0 + 3/8·P1 + 3/8·P2 + 1/8·P3
+// Slightly offset from the line for readability.
+const PATH_LABELS = [
+  { i: 0,  text: '12 items', x: 146, y: 148 },  // above-left of P0 midpt
+  { i: 1,  text: '8 items',  x: 146, y: 314 },  // below-left of P1 midpt
+  { i: 2,  text: '12 items', x: 361, y: 70  },  // above P2
+  { i: 3,  text: '12 items', x: 547, y: 70  },  // above P3
+  { i: 4,  text: '12 items', x: 733, y: 68  },  // above P4
+  { i: 5,  text: '12 items', x: 908, y: 158 },  // right of P5 midpt
+  { i: 6,  text: '8 items',  x: 361, y: 395 },  // below P6
+  { i: 7,  text: '8 items',  x: 716, y: 288 },  // above P7 midpt
+  { i: 8,  text: '20 items', x: 1066, y: 222 }, // above P8
+  { i: 9,  text: '20 items', x: 1242, y: 152 }, // right of P9 midpt
+  { i: 10, text: '20 items', x: 1242, y: 316 }, // right of P10 midpt
 ];
 
-// ─── Styling per node type ────────────────────────────────────────────────────
-const STYLE = {
-  trigger: { bar: '#6366F1', badge: '#6366F1' },
-  logic:   { bar: '#6366F1', badge: '#6366F1' },
-  branch:  { bar: '#8B5CF6', badge: '#8B5CF6' },
-  success: { bar: '#10B981', badge: '#10B981' },
-  error:   { bar: '#EF4444', badge: '#EF4444' },
-};
-
-// ─── Animation steps ──────────────────────────────────────────────────────────
-// Branches are SEQUENTIAL: trunk fully done → SUCCESS → ERROR
-const STEPS = [
-  // Trunk
-  { n:[0],          l:[],         c:[]           },  // 0  Trigger appears
-  { n:[0],          l:[0],        c:[]           },  // 1  draw Trigger→Parse
-  { n:[0,1],        l:[0],        c:[0]          },  // 2  Parse in, Trigger ✓
-  { n:[0,1],        l:[0,1],      c:[0]          },  // 3  draw Parse→Process
-  { n:[0,1,2],      l:[0,1],      c:[0,1]        },  // 4  Process in, Parse ✓
-  { n:[0,1,2],      l:[0,1,2],    c:[0,1]        },  // 5  draw Process→Check
-  { n:[0,1,2,3],    l:[0,1,2],    c:[0,1,2]      },  // 6  Check in, Process ✓
-  { n:[0,1,2,3],    l:[0,1,2],    c:[0,1,2,3]    },  // 7  Check ✓ — pause before branch
-  // SUCCESS branch
-  { n:[0,1,2,3],    l:[0,1,2,3],      c:[0,1,2,3]      },  // 8  draw →Deliver
-  { n:[0,1,2,3,4],  l:[0,1,2,3],      c:[0,1,2,3]      },  // 9  Deliver in
-  { n:[0,1,2,3,4],  l:[0,1,2,3,5],    c:[0,1,2,3,4]    },  // 10 draw →Confirm, Deliver ✓
-  { n:[0,1,2,3,4,5],l:[0,1,2,3,5],    c:[0,1,2,3,4]    },  // 11 Confirm in
-  { n:[0,1,2,3,4,5],l:[0,1,2,3,5],    c:[0,1,2,3,4,5]  },  // 12 Confirm ✓
-  // ERROR branch
-  { n:[0,1,2,3,4,5],    l:[0,1,2,3,4,5],    c:[0,1,2,3,4,5]    },  // 13 draw →Log
-  { n:[0,1,2,3,4,5,6],  l:[0,1,2,3,4,5],    c:[0,1,2,3,4,5]    },  // 14 Log in
-  { n:[0,1,2,3,4,5,6],  l:[0,1,2,3,4,5,6],  c:[0,1,2,3,4,5,6]  },  // 15 draw →Alert, Log ✓
-  { n:[0,1,2,3,4,5,6,7],l:[0,1,2,3,4,5,6],  c:[0,1,2,3,4,5,6]  },  // 16 Alert in
-  { n:[0,1,2,3,4,5,6,7],l:[0,1,2,3,4,5,6],  c:[0,1,2,3,4,5,6,7]},  // 17 all ✓ hold
+// ─── Animation delays (ms) ───────────────────────────────────────────────────
+// Total animation ~5 seconds. Nodes stagger column by column.
+// Lines appear ~100ms after the later of their two endpoint nodes.
+const NODE_DELAYS = [0, 500, 1000, 1600, 2200, 500, 1000, 2900, 3600, 4400, 4400];
+const LINE_DELAYS = [
+  600,  // P0  after Trigger+Fetch
+  600,  // P1  after Trigger+RunLogic
+  1100, // P2  after Filter
+  1700, // P3  after Enrich
+  2300, // P4  after AI
+  3000, // P5  after Merge
+  1100, // P6  after Format
+  3000, // P7  after Merge
+  3700, // P8  after Deliver
+  4500, // P9  after Confirm  (line finishes ~5 050 ms)
+  4500, // P10 after Alert
 ];
-
-// Duration (ms) per step before advancing
-const DUR = [
-  110, 420, 130, 420, 130, 420, 130, 320,  // trunk     (steps 0–7)  ≈ 2.1 s
-  440, 135, 440, 135, 340,                  // SUCCESS   (steps 8–12) ≈ 1.5 s
-  440, 135, 440, 135, 2000,                 // ERROR     (steps 13–17)≈ 3.2 s
-];
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function WorkflowDiagram() {
-  const [step, setStep] = useState(null);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: '0px 0px -80px 0px' });
-
-  useEffect(() => {
-    if (!isInView) { setStep(null); return; }
-    let cancelled = false;
-    const run = async () => {
-      while (!cancelled) {
-        for (let i = 0; i < STEPS.length; i++) {
-          if (cancelled) return;
-          setStep(i);
-          await sleep(DUR[i]);
-        }
-        await sleep(700);
-        if (!cancelled) setStep(null);
-        await sleep(400);
-      }
-    };
-    run();
-    return () => { cancelled = true; setStep(null); };
-  }, [isInView]);
-
-  const s = step !== null ? STEPS[step] : { n: [], l: [], c: [] };
+  // once: true — animates in when section enters view, stays forever
+  const isInView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' });
 
   return (
     <div ref={ref}>
       {/* ── Desktop SVG ── */}
       <div className="hidden md:block w-full overflow-x-auto">
         <svg
-          viewBox="0 0 1320 410"
+          viewBox="0 0 1380 480"
           preserveAspectRatio="xMidYMid meet"
           className="w-full"
-          style={{ minWidth: '820px', maxHeight: '390px' }}
-          aria-label="Animated automation workflow diagram"
+          style={{ minWidth: '860px', maxHeight: '450px' }}
+          aria-label="Animated automation workflow"
         >
           <defs>
-            {/* Default card shadow */}
-            <filter id="cs" x="-14%" y="-22%" width="128%" height="156%">
-              <feDropShadow dx="0" dy="3" stdDeviation="5" floodColor="rgba(0,0,0,0.08)" />
-            </filter>
-            {/* Checked card — warmer glow */}
-            <filter id="ca" x="-14%" y="-22%" width="128%" height="156%">
-              <feDropShadow dx="0" dy="5" stdDeviation="8" floodColor="rgba(45,27,142,0.12)" />
-            </filter>
-            {/* Arrowhead: tip aligned exactly to path endpoint (refX = tip x) */}
-            <marker id="arr" markerWidth="8" markerHeight="6" refX="7.5" refY="3" orient="auto">
-              <path d="M 0 0.5 L 7.5 3 L 0 5.5 z" fill="rgba(45,27,142,0.48)" />
+            {/* Arrowhead — small, brand accent, tip at path endpoint */}
+            <marker id="arr" markerWidth="7" markerHeight="5.5" refX="6.5" refY="2.75" orient="auto">
+              <path d="M 0 0.5 L 6.5 2.75 L 0 5 z" fill="rgba(45,27,142,0.42)" />
             </marker>
           </defs>
 
-          {/* ── Connection lines — all cubic bezier ── */}
+          {/* ── Connection lines ── */}
           {PATHS.map((d, i) => (
             <motion.path
               key={`p${i}`}
               d={d}
-              stroke="rgba(45,27,142,0.36)"
-              strokeWidth="1.7"
+              stroke="rgba(45,27,142,0.28)"
+              strokeWidth="1.6"
               fill="none"
               markerEnd="url(#arr)"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={{
-                pathLength: s.l.includes(i) ? 1 : 0,
-                opacity:    s.l.includes(i) ? 1 : 0,
+              animate={isInView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+              transition={{
+                pathLength: { delay: LINE_DELAYS[i] / 1000, duration: 0.55, ease: 'easeOut' },
+                opacity:    { delay: LINE_DELAYS[i] / 1000, duration: 0.20 },
               }}
-              transition={{ duration: 0.50, ease: 'easeInOut' }}
             />
           ))}
 
-          {/* ── Branch labels ── */}
-          {BRANCH_LABELS.map((bl) => (
-            <motion.g key={bl.text}>
-              {/* Pill background */}
-              <motion.rect
-                x={bl.x - 32} y={bl.y - 11} width={64} height={18} rx={9}
-                fill={bl.color} fillOpacity={0.11}
+          {/* ── Item count pills ── */}
+          {PATH_LABELS.map(({ i, text, x, y }) => {
+            const charW = text.length * 5.2 + 10;
+            return (
+              <motion.g
+                key={`lbl${i}`}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: s.l.includes(bl.pathIdx) ? 1 : 0 }}
-                transition={{ duration: 0.30 }}
-              />
-              <motion.text
-                x={bl.x} y={bl.y + 1}
-                textAnchor="middle" dominantBaseline="middle"
-                fontFamily="Inter, sans-serif" fontSize="9" fontWeight="700"
-                letterSpacing="0.08em" fill={bl.color}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: s.l.includes(bl.pathIdx) ? 0.92 : 0 }}
-                transition={{ duration: 0.30 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: LINE_DELAYS[i] / 1000 + 0.18, duration: 0.25 }}
               >
-                {bl.text}
-              </motion.text>
-            </motion.g>
-          ))}
+                <rect
+                  x={x - charW / 2} y={y - 8}
+                  width={charW} height={14}
+                  rx={7}
+                  fill="rgba(255,255,255,0.80)"
+                  stroke="rgba(45,27,142,0.16)"
+                  strokeWidth="0.8"
+                />
+                <text
+                  x={x} y={y + 1.5}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fontFamily="Inter, sans-serif" fontSize="9"
+                  fontWeight="500" fill="rgba(45,27,142,0.55)"
+                >
+                  {text}
+                </text>
+              </motion.g>
+            );
+          })}
 
           {/* ── Nodes ── */}
           {NODES.map((node) => {
-            const visible = s.n.includes(node.id);
-            const checked = s.c.includes(node.id);
-            const st = STYLE[node.type];
-            const cy = node.y + NH / 2; // vertical centre
-
+            const { id, label, sub, icon, color, cx, cy } = node;
             return (
               <motion.g
-                key={`n${node.id}`}
-                initial={{ opacity: 0, y: 9 }}
-                animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 9 }}
-                transition={{ duration: 0.32, ease: 'easeOut' }}
+                key={`n${id}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+                transition={{
+                  delay: NODE_DELAYS[id] / 1000,
+                  duration: 0.40,
+                  ease: 'easeOut',
+                }}
               >
-                {/* ── Card body ── */}
+                {/* ── Node box ── */}
                 <rect
-                  x={node.x} y={node.y}
-                  width={NW} height={NH}
-                  rx={14}
-                  fill="rgba(255,255,255,0.91)"
-                  stroke={checked ? 'rgba(45,27,142,0.18)' : 'rgba(0,0,0,0.05)'}
-                  strokeWidth={checked ? 1.2 : 0.8}
-                  filter={checked ? 'url(#ca)' : 'url(#cs)'}
+                  x={cx - NB} y={cy - NB}
+                  width={90} height={90}
+                  rx={11}
+                  fill={color}
+                />
+                {/* Subtle inner top-highlight for glassy depth */}
+                <rect
+                  x={cx - NB + 1} y={cy - NB + 1}
+                  width={88} height={43}
+                  rx={10}
+                  fill="rgba(255,255,255,0.10)"
                 />
 
-                {/* Left accent bar */}
-                <rect
-                  x={node.x + 1} y={node.y + 9}
-                  width={4} height={NH - 18}
-                  rx={2}
-                  fill={st.bar}
-                  opacity={0.88}
-                />
-
-                {/* Main label — bold */}
+                {/* Icon — centred in box */}
                 <text
-                  x={node.x + 20} y={cy - 9}
+                  x={cx} y={cy + 2}
+                  textAnchor="middle"
                   dominantBaseline="middle"
-                  fontFamily="Inter, sans-serif"
-                  fontSize="13.5" fontWeight="640"
-                  fill="rgba(10,10,9,0.82)"
+                  fontFamily="'Inter', monospace, sans-serif"
+                  fontSize="26"
+                  fontWeight="400"
+                  fill="rgba(255,255,255,0.92)"
                 >
-                  {node.label}
+                  {icon}
                 </text>
 
-                {/* Sub-label — muted */}
+                {/* Connection handles — left & right edges */}
+                <circle cx={cx - NB} cy={cy} r="5" fill="rgba(255,255,255,0.72)" />
+                <circle cx={cx + NB} cy={cy} r="5" fill="rgba(255,255,255,0.72)" />
+
+                {/* Node name label — below box */}
                 <text
-                  x={node.x + 20} y={cy + 10}
-                  dominantBaseline="middle"
+                  x={cx} y={cy + NB + 14}
+                  textAnchor="middle"
                   fontFamily="Inter, sans-serif"
-                  fontSize="10.5" fontWeight="400"
+                  fontSize="12"
+                  fontWeight="500"
+                  fill="rgba(10,10,9,0.78)"
+                >
+                  {label}
+                </text>
+
+                {/* Sub-label — muted, below name */}
+                <text
+                  x={cx} y={cy + NB + 29}
+                  textAnchor="middle"
+                  fontFamily="Inter, sans-serif"
+                  fontSize="10"
+                  fontWeight="400"
                   fill="rgba(10,10,9,0.40)"
                 >
-                  {node.sub}
+                  {sub}
                 </text>
-
-                {/* ── Status badge — top-right corner ── */}
-                <g transform={`translate(${node.x + NW - 14}, ${node.y + 14})`}>
-                  {/* Badge circle — appears with node */}
-                  <circle
-                    r={10}
-                    fill={`${st.badge}1A`}
-                    stroke={st.badge}
-                    strokeWidth="1.1"
-                    opacity={visible ? 0.90 : 0}
-                  />
-                  {/* Tick — draws in when checked */}
-                  <motion.path
-                    d="M -4.5 0.5 L -1.5 4 L 5 -3.5"
-                    stroke={st.badge}
-                    strokeWidth="1.8"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{
-                      pathLength: checked ? 1 : 0,
-                      opacity:    checked ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.28, ease: 'easeOut' }}
-                  />
-                </g>
               </motion.g>
             );
           })}
         </svg>
       </div>
 
-      {/* ── Mobile fallback ── */}
+      {/* ── Mobile fallback — vertical stack ── */}
       <div className="md:hidden space-y-2 max-w-xs mx-auto">
-        {NODES.map((node) => {
-          const st = STYLE[node.type];
-          return (
-            <div
-              key={node.id}
-              className="rounded-xl px-4 py-3"
-              style={{
-                background: 'rgba(255,255,255,0.90)',
-                borderLeft: `4px solid ${st.bar}`,
-                boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-              }}
-            >
-              <div
-                className="font-inter text-sm font-semibold"
-                style={{ color: 'rgba(10,10,9,0.80)' }}
-              >
-                {node.label}
-              </div>
-              <div
-                className="font-inter text-xs mt-0.5"
-                style={{ color: 'rgba(10,10,9,0.44)' }}
-              >
-                {node.sub}
-              </div>
+        {NODES.map(({ id, label, sub, color }) => (
+          <div
+            key={id}
+            className="flex items-center gap-3 rounded-xl px-4 py-3"
+            style={{ background: 'rgba(255,255,255,0.88)', borderLeft: `4px solid ${color}`, boxShadow: '0 2px 8px rgba(0,0,0,0.07)' }}
+          >
+            <div>
+              <div className="font-inter text-sm font-medium" style={{ color: 'rgba(10,10,9,0.78)' }}>{label}</div>
+              <div className="font-inter text-xs" style={{ color: 'rgba(10,10,9,0.42)' }}>{sub}</div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

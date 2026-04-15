@@ -30,6 +30,7 @@
   }
 
   .section-label {
-    @apply text-xs font-inter font-medium tracking-widest uppercase text-[#666666] mb-4;
+    @apply text-[10px] font-inter font-medium tracking-widest uppercase mb-2;
+    color: rgba(102,102,102,0.75);
   }
 }
