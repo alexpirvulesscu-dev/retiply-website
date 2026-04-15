@@ -1,14 +1,16 @@
 ---
+import AnimatedQuote from './AnimatedQuote.jsx';
+const quoteText = `"We're not here to sell you software. We're here to fix the part of your business that's been costing you quietly for years."`;
 const founders = [
   {
-    initial: 'A',
     name: 'Alex',
     role: 'Operations & Strategy',
+    photo: '/Alex.jpg',
   },
   {
-    initial: 'A',
     name: 'Ana',
     role: 'Systems & Implementation',
+    photo: '/Ana.png',
   },
 ];
 ---
@@ -48,12 +50,14 @@ const founders = [
           <div class="founder-card flex-1 bg-brand-surface rounded-2xl p-10 flex items-center gap-8 cursor-default">
             <!-- Avatar -->
             <div
-              class="w-24 h-24 rounded-full bg-brand-accent flex items-center justify-center flex-shrink-0"
+              class="w-24 h-24 rounded-full flex-shrink-0 overflow-hidden"
               style="box-shadow: 0 0 0 5px rgba(45,27,142,0.12);"
             >
-              <span class="font-poppins font-semibold text-3xl text-white">
-                {founder.initial}
-              </span>
+              <img
+                src={founder.photo}
+                alt={founder.name}
+                class="w-full h-full object-cover"
+              />
             </div>
             <div>
               <p class="font-poppins font-bold text-3xl text-brand-text mb-2">
@@ -69,12 +73,13 @@ const founders = [
 
     </div>
 
-    <!-- Pull quote — below both columns -->
+    <!-- Pull quote — below both columns, word-by-word reveal -->
     <blockquote class="mt-14 border-l-2 border-brand-accent pl-8">
-      <p class="font-poppins font-medium text-xl md:text-2xl text-brand-text leading-snug">
-        "We're not here to sell you software. We're here to fix the part of
-        your business that's been costing you quietly for years."
-      </p>
+      <AnimatedQuote
+        client:visible
+        text={quoteText}
+        className="font-poppins font-medium text-xl md:text-2xl text-brand-accent leading-snug"
+      />
     </blockquote>
 
   </div>
