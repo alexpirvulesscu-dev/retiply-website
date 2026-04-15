@@ -1,19 +1,19 @@
 ---
 const testimonials = [
   {
-    quote: 'Your testimonial here.',
-    name: 'Client Name',
-    company: 'Company',
+    quote: `Our finance team was drowning in manual reports every week. Now we got 14 hours back and I could finally see the numbers clearly enough to make fast decisions. In construction, that speed matters and it's been a game changer for us.`,
+    name: 'Doina',
+    company: 'Socend Construct',
   },
   {
-    quote: 'Your testimonial here.',
-    name: 'Client Name',
-    company: 'Company',
+    quote: `We used to have no visibility, no projections, just constant fires to put out. We now have a cash flow system our team never would have had time to build. Now I can see 30, 60, 90 days ahead. I spot problems before they become a crisis. Every decision I make now has real numbers behind it.`,
+    name: 'Radu',
+    company: 'Aton Grid',
   },
   {
-    quote: 'Your testimonial here.',
-    name: 'Client Name',
-    company: 'Company',
+    quote: `The cost of living crisis hit hard. Patients were leaving and I didn't know how to stop it. I decided to finally trust a lead gen system and I'm glad I did. I had to pause it after the first month — not because it didn't work, but because it worked too well. I got 40 new recurring patients and a fully booked calendar. I wasn't ready for that.`,
+    name: 'Cristina',
+    company: 'Dentist',
   },
 ];
 ---
@@ -32,18 +32,18 @@ const testimonials = [
     <!-- Testimonial cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {testimonials.map((t) => (
-        <div class="bg-brand-bg rounded-2xl p-8 flex flex-col justify-between min-h-[220px]">
+        <div class="bg-brand-bg rounded-2xl p-8 flex flex-col justify-between">
           <!-- Quote mark -->
           <div>
             <span class="font-poppins text-5xl text-brand-accent leading-none select-none">"</span>
-            <p class="font-inter text-brand-text text-base leading-relaxed mt-2 italic opacity-40">
+            <p class="font-inter text-brand-text text-base leading-relaxed mt-2 italic">
               {t.quote}
             </p>
           </div>
           <!-- Attribution -->
           <div class="mt-8 pt-6 border-t border-brand-surface3">
-            <p class="font-inter font-medium text-sm text-brand-text opacity-40">{t.name}</p>
-            <p class="font-inter text-xs text-brand-muted opacity-30">{t.company}</p>
+            <p class="font-inter font-semibold text-sm text-brand-text">{t.name}</p>
+            <p class="font-inter text-xs text-brand-muted">{t.company}</p>
           </div>
         </div>
       ))}

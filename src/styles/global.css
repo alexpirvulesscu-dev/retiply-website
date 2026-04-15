@@ -31,6 +31,6 @@
 
   .section-label {
     @apply text-[10px] font-inter font-medium tracking-widest uppercase mb-2;
-    color: rgba(102,102,102,0.75);
+    color: #5B1FE8;
   }
 }
