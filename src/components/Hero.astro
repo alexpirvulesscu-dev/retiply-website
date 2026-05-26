@@ -1,6 +1,6 @@
 ---
 import AuroraBackground from './AuroraBackground.astro';
-const CALENDLY_URL = '#contact';
+const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/retiply/30min', color: '#5B1FE6', textColor: '#ffffff'}); return false;";
 ---
 
 <section id="hero-section" class="relative overflow-hidden min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-12 bg-brand-bg">
@@ -16,27 +16,26 @@ const CALENDLY_URL = '#contact';
   <div class="relative z-10 w-full max-w-6xl mx-auto mt-10 md:mt-14 px-4">
 
     <!-- Main headline -->
-    <h1 class="font-poppins font-bold text-4xl md:text-[3.5rem] lg:text-[4.5rem] text-brand-accent leading-[1.15] tracking-tight mb-6">
-      You're losing money on work<br />
-      that should already be automatic.
+    <h1
+      class="text-4xl md:text-[4rem] lg:text-[5rem] leading-[1.2] tracking-tight"
+      style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #1E0660; margin-bottom: 2cm;"
+    >
+      The <span style="background: #5B1FE6; color: white; border-radius: 0.45em; padding: 0 0.28em; display: inline-block; vertical-align: baseline;">AI automations</span> partner<br />
+      for growing businesses
     </h1>
 
     <!-- Subheadline -->
-    <p class="font-inter text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10" style="color: #222222;">
-      We find the manual tasks draining your business — and we build the systems to do them for you.
-    </p>
-
-    <!-- Caption -->
-    <p class="mb-8 text-3xl md:text-4xl text-brand-text/75" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; letter-spacing: -0.01em;">
-      Built by operators, for operators.
+    <p class="font-inter text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed" style="color: #222222; margin-bottom: 2cm;">
+      We find the manual tasks draining your business and build the systems to do them for you.
     </p>
 
     <!-- CTA -->
     <a
-      href={CALENDLY_URL}
+      href="#"
+      onclick={calendlyClick}
       class="inline-flex items-center gap-3 bg-brand-accent text-white rounded-full pl-6 pr-1.5 py-1.5 font-inter font-medium text-base hover:bg-brand-accent-light transition-colors duration-200"
     >
-      Book a Free 30-Min Call — See Exactly What We'd Fix
+      Let's talk
       <span class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

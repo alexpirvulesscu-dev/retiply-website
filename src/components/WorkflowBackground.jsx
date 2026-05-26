@@ -1,49 +1,57 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 
-// Node box dimensions
-const NODE_W = 130;
+// Node dimensions
+const NODE_W = 120;
 const NODE_H = 40;
+const NHalf  = NODE_H / 2; // 20
 
-// Workflow nodes — positioned inside a 1080×580 viewBox
+// ─── Nodes ───────────────────────────────────────────────────────────────────
+// Positioned inside a 640 × 260 viewBox.
+// x/y = top-left corner of the node rect.
+//   Top row:    Webhook → Filter Data → Transform → Send Email
+//   Bottom row:             └──────→ Update CRM → Notify Slack
 const NODES = [
-  { label: 'Webhook',      x: 60,  y: 270 },
-  { label: 'Filter Data',  x: 290, y: 270 },
-  { label: 'Transform',    x: 530, y: 195 },
-  { label: 'Send Email',   x: 780, y: 195 },
-  { label: 'Update CRM',   x: 530, y: 345 },
-  { label: 'Notify Slack', x: 780, y: 345 },
+  { label: 'Webhook',      x: 10,  y: 65  },  // 0
+  { label: 'Filter Data',  x: 170, y: 65  },  // 1
+  { label: 'Transform',    x: 330, y: 65  },  // 2
+  { label: 'Send Email',   x: 500, y: 65  },  // 3
+  { label: 'Update CRM',   x: 330, y: 170 },  // 4
+  { label: 'Notify Slack', x: 500, y: 170 },  // 5
 ];
 
-// SVG path strings: right edge of source → left edge of target
-// Node right edge = x + NODE_W, center Y = y + NODE_H/2
+// ─── Paths ───────────────────────────────────────────────────────────────────
+// Right edge of source = x + NODE_W.  Left edge of target = x.
+// Centre Y of source/target = y + NHalf.
 const PATHS = [
-  // 0→1 horizontal: (190,290) → (290,290)
-  'M 190 290 L 290 290',
-  // 1→2 upward curve: (420,284) → (530,215)
-  'M 420 284 C 480 284 474 215 530 215',
-  // 2→3 horizontal: (660,215) → (780,215)
-  'M 660 215 L 780 215',
-  // 1→4 downward curve: (420,296) → (530,365)
-  'M 420 296 C 480 296 474 365 530 365',
-  // 4→5 horizontal: (660,365) → (780,365)
-  'M 660 365 L 780 365',
+  // 0→1  horizontal  (130,85) → (170,85)
+  'M 130 85 C 150 85, 150 85, 170 85',
+  // 1→2  horizontal  (290,85) → (330,85)
+  'M 290 85 C 310 85, 310 85, 330 85',
+  // 2→3  horizontal  (450,85) → (500,85)
+  'M 450 85 C 475 85, 475 85, 500 85',
+  // 1→4  branch down  (290,85) → (330,190)
+  'M 290 85 C 330 85, 290 190, 330 190',
+  // 4→5  horizontal  (450,190) → (500,190)
+  'M 450 190 C 475 190, 475 190, 500 190',
 ];
 
-// Animation steps: each step defines visible nodes, visible lines, and checked nodes
+// ─── Animation steps ─────────────────────────────────────────────────────────
+// Each step declares which node indices are visible, which lines are drawn,
+// and which nodes show a completed (green check) state.
 const STEPS = [
-  { nodes: [0],             lines: [],          checked: []             },
-  { nodes: [0],             lines: [0],         checked: []             },
-  { nodes: [0, 1],          lines: [0],         checked: [0]            },
-  { nodes: [0, 1],          lines: [0, 1, 3],   checked: [0]            },
-  { nodes: [0, 1, 2, 4],    lines: [0, 1, 3],   checked: [0, 1]         },
-  { nodes: [0, 1, 2, 4],    lines: [0, 1, 2, 3, 4], checked: [0, 1]    },
-  { nodes: [0, 1, 2, 3, 4, 5], lines: [0, 1, 2, 3, 4], checked: [0, 1, 2, 4]         },
-  { nodes: [0, 1, 2, 3, 4, 5], lines: [0, 1, 2, 3, 4], checked: [0, 1, 2, 3, 4, 5]  },
+  { nodes: [0],                lines: [],             checked: []          },
+  { nodes: [0],                lines: [0],            checked: []          },
+  { nodes: [0, 1],             lines: [0],            checked: [0]         },
+  { nodes: [0, 1],             lines: [0, 1, 3],      checked: [0]         },
+  { nodes: [0, 1, 2, 4],       lines: [0, 1, 3],      checked: [0, 1]      },
+  { nodes: [0, 1, 2, 4],       lines: [0, 1, 2, 3, 4], checked: [0, 1]    },
+  { nodes: [0, 1, 2, 3, 4, 5], lines: [0, 1, 2, 3, 4], checked: [0, 1, 2, 4]        },
+  { nodes: [0, 1, 2, 3, 4, 5], lines: [0, 1, 2, 3, 4], checked: [0, 1, 2, 3, 4, 5] },
 ];
 
-// How long to stay on each step before advancing (ms)
-const STEP_DURATIONS = [300, 600, 500, 600, 500, 600, 900, 1800];
+// How long to hold each step (ms) before advancing
+const STEP_DURATIONS = [300, 600, 500, 600, 500, 600, 900, 2000];
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -53,7 +61,7 @@ export default function WorkflowBackground() {
   const [isHovered, setIsHovered] = useState(false);
   const [activeStep, setActiveStep] = useState(null);
 
-  // Attach mouseenter / mouseleave to the hero section by ID
+  // Attach mouseenter / mouseleave to the hero section
   useEffect(() => {
     const hero = document.getElementById('hero-section');
     if (!hero) return;
@@ -70,7 +78,7 @@ export default function WorkflowBackground() {
     };
   }, []);
 
-  // Run the animation loop while hovered; reset immediately on leave
+  // Run animation loop while hovered; reset on leave
   useEffect(() => {
     if (!isHovered) {
       setActiveStep(null);
@@ -81,15 +89,13 @@ export default function WorkflowBackground() {
 
     const run = async () => {
       while (!cancelled) {
-        // Step through each animation frame
         for (let i = 0; i < STEPS.length; i++) {
           if (cancelled) return;
           setActiveStep(i);
           await sleep(STEP_DURATIONS[i]);
         }
-
-        // Brief pause at end before looping
-        await sleep(1000);
+        // Pause then reset before replaying
+        await sleep(800);
         if (!cancelled) setActiveStep(null);
         await sleep(400);
       }
@@ -109,66 +115,67 @@ export default function WorkflowBackground() {
 
   return (
     <div
-      className="absolute inset-0 pointer-events-none"
+      className="absolute inset-0 pointer-events-none hidden md:block"
       style={{
-        zIndex: 2,
+        zIndex: 3,
         opacity: isHovered ? 1 : 0,
-        transition: 'opacity 0.5s ease',
+        transition: 'opacity 0.45s ease',
       }}
     >
-      {/* Fine dot grid */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle, rgba(0,0,0,0.10) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
-
-      {/* Workflow SVG — hidden on touch devices (no hover there) */}
+      {/*
+        SVG sits in the lower-right quadrant of the hero so it never
+        obscures the headline text (which is centred in the top half).
+      */}
       <svg
-        viewBox="0 0 1080 580"
+        viewBox="0 0 640 260"
         preserveAspectRatio="xMidYMid meet"
-        className="absolute inset-0 w-full h-full hidden md:block"
+        className="absolute"
+        style={{
+          bottom: '5%',
+          right: '2%',
+          width: '52%',
+          maxWidth: '640px',
+          height: 'auto',
+          opacity: 0.52,
+        }}
         aria-hidden="true"
       >
         <defs>
           <marker
             id="wf-arrow"
-            markerWidth="8"
-            markerHeight="6"
-            refX="7"
-            refY="3"
+            markerWidth="7"
+            markerHeight="5.5"
+            refX="6.5"
+            refY="2.75"
             orient="auto"
           >
-            <path d="M 0 0 L 7 3 L 0 6 z" fill="rgba(45,27,142,0.4)" />
+            <path d="M 0 0.5 L 6.5 2.75 L 0 5 z" fill="rgba(45,27,142,0.35)" />
           </marker>
         </defs>
 
-        {/* Connection lines */}
+        {/* ── Connection lines ── */}
         {PATHS.map((d, i) => (
           <motion.path
             key={`line-${i}`}
             d={d}
-            stroke="rgba(45,27,142,0.35)"
+            stroke="rgba(45,27,142,0.28)"
             strokeWidth="1.5"
             fill="none"
             markerEnd="url(#wf-arrow)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{
               pathLength: step.lines.includes(i) ? 1 : 0,
-              opacity: step.lines.includes(i) ? 1 : 0,
+              opacity:    step.lines.includes(i) ? 1 : 0,
             }}
-            transition={{ duration: 0.55, ease: 'easeInOut' }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
           />
         ))}
 
-        {/* Nodes */}
+        {/* ── Nodes ── */}
         {NODES.map((node, i) => {
           const visible = step.nodes.includes(i);
           const checked = step.checked.includes(i);
-          const cy = node.y + NODE_H / 2;
+          const cy = node.y + NHalf; // vertical centre of the node
 
           return (
             <motion.g
@@ -177,72 +184,62 @@ export default function WorkflowBackground() {
               animate={{ opacity: visible ? 1 : 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
-              {/* Node card */}
+              {/* Card body */}
               <rect
                 x={node.x}
                 y={node.y}
                 width={NODE_W}
                 height={NODE_H}
                 rx="8"
-                fill="rgba(255,255,255,0.08)"
-                stroke={
-                  checked
-                    ? 'rgba(45,27,142,0.55)'
-                    : 'rgba(45,27,142,0.22)'
-                }
+                fill="rgba(255,255,255,0.07)"
+                stroke={checked ? 'rgba(45,27,142,0.45)' : 'rgba(45,27,142,0.18)'}
                 strokeWidth="1"
               />
 
-              {/* Coloured dot (node type indicator) */}
+              {/* Type-indicator dot */}
               <circle
-                cx={node.x + 18}
+                cx={node.x + 16}
                 cy={cy}
-                r="5"
-                fill={
-                  checked
-                    ? 'rgba(45,27,142,0.35)'
-                    : 'rgba(45,27,142,0.15)'
-                }
+                r="4.5"
+                fill={checked ? 'rgba(45,27,142,0.35)' : 'rgba(45,27,142,0.15)'}
               />
 
               {/* Label */}
               <text
-                x={node.x + 32}
+                x={node.x + 28}
                 y={cy + 4}
                 fontFamily="Inter, sans-serif"
                 fontSize="11"
                 fontWeight="500"
-                fill="rgba(10,10,9,0.5)"
+                fill="rgba(45,27,142,0.45)"
               >
                 {node.label}
               </text>
 
-              {/* Checkmark badge — draws in using pathLength */}
-              <g
-                transform={`translate(${node.x + NODE_W - 14}, ${cy})`}
-              >
+              {/* Checkmark badge */}
+              <g transform={`translate(${node.x + NODE_W - 13}, ${cy})`}>
                 <motion.circle
-                  r="8"
+                  r="7.5"
                   fill="rgba(34,197,94,0.12)"
-                  stroke="rgba(34,197,94,0.65)"
-                  strokeWidth="1"
+                  stroke="rgba(34,197,94,0.60)"
+                  strokeWidth="0.9"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: checked ? 1 : 0 }}
                   transition={{ duration: 0.25 }}
                 />
                 <motion.path
-                  d="M -3.5 0.5 L -1 3 L 4.5 -2.5"
-                  stroke="rgba(34,197,94,0.95)"
-                  strokeWidth="1.5"
+                  d="M -3 0.5 L -0.5 3 L 4.5 -2.5"
+                  stroke="rgba(34,197,94,0.92)"
+                  strokeWidth="1.4"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={{
                     pathLength: checked ? 1 : 0,
-                    opacity: checked ? 1 : 0,
+                    opacity:    checked ? 1 : 0,
                   }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.28, ease: 'easeOut' }}
                 />
               </g>
             </motion.g>
