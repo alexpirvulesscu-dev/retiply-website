@@ -1,0 +1,168 @@
+---
+// ProofStrip — full-width social proof stats band with count-up animation
+---
+
+<section class="proof-strip relative" style="position: relative; z-index: 1;">
+  <!-- Dot grid — matches Hero -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="z-index: 1; background-image: radial-gradient(circle, rgba(0,0,0,0.20) 1px, transparent 1px); background-size: 28px 28px;"
+  ></div>
+
+  <div class="proof-strip__grid relative" style="z-index: 2;">
+    <div class="proof-strip__col" data-index="0">
+      <span class="proof-strip__number" data-target="14" data-suffix=" hrs">0</span>
+      <span class="proof-strip__label">given back per week</span>
+      <span class="proof-strip__attribution">Socend Construct</span>
+    </div>
+
+    <div class="proof-strip__divider" aria-hidden="true"></div>
+
+    <div class="proof-strip__col" data-index="1">
+      <span class="proof-strip__number" data-target="30" data-suffix="+">0</span>
+      <span class="proof-strip__label">new customers in 3 months</span>
+      <span class="proof-strip__attribution">London Dental Practice</span>
+    </div>
+
+    <div class="proof-strip__divider" aria-hidden="true"></div>
+
+    <div class="proof-strip__col" data-index="2">
+      <span class="proof-strip__number" data-target="90" data-suffix=" days">0</span>
+      <span class="proof-strip__label">of cash flow visibility</span>
+      <span class="proof-strip__attribution">Aton Grid</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof-strip {
+    width: 100%;
+    background: #E8E4DF;
+    padding: 0 24px 64px 24px;
+  }
+
+  .proof-strip__grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 960px;
+    margin: 0 auto;
+    gap: 48px;
+  }
+
+  .proof-strip__col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .proof-strip__col.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .proof-strip__divider {
+    width: 1px;
+    height: 96px;
+    background: #D0CCC6;
+    flex-shrink: 0;
+  }
+
+  .proof-strip__number {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    color: #0A0A0A;
+    line-height: 1.1;
+  }
+
+  .proof-strip__label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: #6B6B6B;
+    margin-top: 4px;
+  }
+
+  .proof-strip__attribution {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: #6B6B6B;
+    margin-top: 2px;
+  }
+
+  /* Mobile: stack vertically */
+  @media (max-width: 640px) {
+    .proof-strip {
+      padding: 0 24px 48px 24px;
+    }
+
+    .proof-strip__grid {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .proof-strip__divider {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function easeOutCubic(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animateCount(el: HTMLElement, target: number, suffix: string, duration: number) {
+    const start = performance.now();
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.round(easeOutCubic(progress) * target);
+      el.textContent = value + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const section = document.querySelector('.proof-strip');
+  if (section) {
+    const cols = section.querySelectorAll<HTMLElement>('.proof-strip__col');
+    const numbers = section.querySelectorAll<HTMLElement>('.proof-strip__number');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+
+          // Stagger columns left to right, 100ms apart
+          cols.forEach((col, i) => {
+            setTimeout(() => {
+              col.classList.add('visible');
+
+              // Start count-up for this column's number
+              const numEl = col.querySelector<HTMLElement>('.proof-strip__number');
+              if (numEl) {
+                const target = parseInt(numEl.dataset.target || '0', 10);
+                const suffix = numEl.dataset.suffix || '';
+                animateCount(numEl, target, suffix, 1200);
+              }
+            }, i * 100);
+          });
+
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(section);
+  }
+</script>

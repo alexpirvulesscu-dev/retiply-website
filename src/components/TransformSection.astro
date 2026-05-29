@@ -1,0 +1,48 @@
+---
+// TransformSection — animated before/after scenario scenes
+import TransformInteractive from './TransformInteractive.tsx';
+---
+
+<section class="transform-section">
+  <div class="transform-section__inner">
+    <TransformInteractive client:visible />
+  </div>
+</section>
+
+<style>
+  .transform-section {
+    width: 100%;
+    background: #F5F3EF;
+    padding: 96px 24px;
+  }
+
+  .transform-section__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .transform-section {
+      padding: 64px 16px;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Mobile: stack scene panels vertically */
+  @media (max-width: 768px) {
+    .tf-scene-panel {
+      grid-template-columns: 1fr !important;
+    }
+    .tf-scene-panel > div {
+      height: 240px !important;
+    }
+    .tf-divider-v {
+      display: none !important;
+    }
+    /* Horizontal divider between stacked panels on mobile */
+    .tf-scene-panel > div:first-child {
+      border-bottom: 1px solid #D0CCC6;
+    }
+  }
+</style>

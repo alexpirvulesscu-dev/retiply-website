@@ -1,0 +1,16 @@
+---
+import ProblemRowsInteractive from './ProblemRowsInteractive.tsx';
+---
+
+<ProblemRowsInteractive client:visible />
+
+<style is:global>
+  @media (max-width: 768px) {
+    .pr-section {
+      padding: 48px 16px !important;
+    }
+    .pr-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

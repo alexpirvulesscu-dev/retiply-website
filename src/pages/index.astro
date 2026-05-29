@@ -2,14 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Problem from '../components/Problem.astro';
 import Services from '../components/Services.astro';
 import HowWeWork from '../components/HowWeWork.astro';
 import WhyRetiply from '../components/WhyRetiply.astro';
 import SocialProof from '../components/SocialProof.astro';
 import CTABand from '../components/CTABand.astro';
 import Footer from '../components/Footer.astro';
-import WorkflowSection from '../components/WorkflowSection.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import ProblemRows from '../components/ProblemRows.astro';
 ---
 
 <BaseLayout>
@@ -19,13 +19,11 @@ import WorkflowSection from '../components/WorkflowSection.astro';
     <!-- 1. Hero -->
     <Hero />
 
-    <!-- 2. Workflow diagram -->
-    <WorkflowSection />
+    <!-- Proof Strip — social proof stats -->
+    <ProofStrip />
 
-    <!-- 3. Problem -->
-    <div id="problem">
-      <Problem />
-    </div>
+    <!-- Problem rows — six problems with stats -->
+    <ProblemRows />
 
     <!-- 3. Services -->
     <div id="services">

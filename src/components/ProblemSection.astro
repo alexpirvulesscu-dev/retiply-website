@@ -1,0 +1,43 @@
+---
+// ProblemSection — interactive checkbox problem diagnosis
+import ProblemInteractive from './ProblemInteractive.tsx';
+---
+
+<section class="problem-section">
+  <div class="problem-section__inner">
+    <ProblemInteractive client:visible />
+  </div>
+</section>
+
+<style>
+  .problem-section {
+    width: 100%;
+    background: #F5F3EF;
+    padding: 96px 24px;
+  }
+
+  .problem-section__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .problem-section {
+      padding: 64px 16px;
+    }
+  }
+</style>
+
+<style is:global>
+  @media (max-width: 768px) {
+    .problem-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .problem-panel {
+      position: static !important;
+    }
+    .problem-closing {
+      margin-top: 48px !important;
+    }
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+// BeforeAfter — interactive before/after comparison section
+import BeforeAfterInteractive from './BeforeAfterInteractive.tsx';
+---
+
+<section class="before-after">
+  <div class="before-after__inner">
+    <BeforeAfterInteractive client:visible />
+  </div>
+</section>
+
+<style>
+  .before-after {
+    width: 100%;
+    background: #F5F3EF;
+    padding: 96px 24px;
+  }
+
+  .before-after__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Mobile responsive panel: stack columns */
+  @media (max-width: 768px) {
+    .before-after {
+      padding: 64px 16px;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Mobile: stack the grid columns vertically, hide divider */
+  @media (max-width: 768px) {
+    .ba-panel {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+    .ba-divider {
+      display: none !important;
+    }
+  }
+
+  /* Disable hover pulse on touch devices */
+  @media (hover: none) {
+    .ba-after-metric {
+      transform: none !important;
+    }
+  }
+</style>

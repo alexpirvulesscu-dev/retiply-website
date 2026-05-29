@@ -7,7 +7,7 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#F0EDE8',
+          bg: '#E8E4DF',
           surface: '#E8E4DF',
           surface3: '#DEDAD4',
           accent: '#5B1FE8',
@@ -18,7 +18,7 @@ export default {
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        inter: ['Geist Sans', 'Inter', 'sans-serif'],
       },
       animation: {
         aurora: 'aurora 60s linear infinite',

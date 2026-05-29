@@ -3,84 +3,88 @@ import AnimatedQuote from './AnimatedQuote.jsx';
 const quoteText = `"We're not here to sell you software. We're here to fix the part of your business that's been costing you quietly for years."`;
 const founders = [
   {
-    name: 'Alex',
-    role: 'Operations & Strategy',
-    photo: '/Alex.jpg',
-  },
-  {
     name: 'Ana',
     role: 'Systems & Implementation',
     photo: '/Ana.png',
+    bio: 'Board-level business efficiency, finance, HR, marketing and sales across 13 years of running and operating businesses. Ana has sat in the finance seat, managed the numbers, and led marketing and sales efforts from the ground up. She builds automations that make sense to the people who actually have to use them.',
+  },
+  {
+    name: 'Alex',
+    role: 'Operations & Strategy',
+    photo: '/Alex.jpg',
+    bio: '18 years running and operating businesses across multiple industries. Alex has built and led teams, driven sales, and developed strategy at a senior level. He understands how businesses actually work from the inside, not just on paper. That experience is what shapes every automation he designs.',
   },
 ];
 ---
 
 <section class="relative py-24 px-6 bg-brand-bg">
   <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
-
-      <!-- Left: Authority text -->
-      <div>
-        <p class="section-label">Why Us</p>
-        <h2 class="font-inter font-bold text-2xl md:text-3xl text-brand-text leading-tight mb-8">
-          We've been running businesses <span class="whitespace-nowrap">like yours.</span><br />
-          We know what's breaking it.
-        </h2>
-        <div class="space-y-5 font-inter text-base text-brand-muted leading-relaxed">
-          <p>
-            Between us, we have 30+ years running and operating project-based
-            businesses — construction, services, trades. We've felt the pressure,
-            missed the numbers, chased the invoices.
-          </p>
-          <p>
-            Then we spent years learning how AI and automation actually work in
-            the real world — not in a pitch deck, but on the floor, with real
-            teams, real resistance, real change.
-          </p>
-          <p>
-            That combination is rare. Most tech companies don't understand your
-            business. Most consultants don't understand the technology. We do both.
-          </p>
-        </div>
-      </div>
-
-      <!-- Right: Founder cards (no stat block) -->
-      <div class="flex flex-col gap-6">
-        {founders.map((founder) => (
-          <div class="founder-card flex-1 bg-brand-surface rounded-2xl p-10 flex items-center gap-8 cursor-default">
-            <!-- Avatar -->
-            <div
-              class="w-24 h-24 rounded-full flex-shrink-0 overflow-hidden"
-              style="box-shadow: 0 0 0 5px rgba(45,27,142,0.12);"
-            >
-              <img
-                src={founder.photo}
-                alt={founder.name}
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <div>
-              <p class="font-poppins font-bold text-3xl text-brand-text mb-2">
-                {founder.name}
-              </p>
-              <p class="font-inter text-base italic text-brand-accent">
-                {founder.role}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-
+    <!-- Heading + subtitle -->
+    <div>
+      <h2 class="font-inter font-bold text-brand-text" style="font-size: clamp(1.75rem, 4vw, 3rem); line-height: 1.1; margin: 0;">
+        Why Us
+      </h2>
+      <p style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1rem; color: #6B6B6B; margin-top: 12px; margin-bottom: 32px;">We've been running businesses like yours. We know what's breaking it.</p>
     </div>
 
-    <!-- Pull quote — below both columns, word-by-word reveal -->
-    <blockquote class="mt-14 border-l-2 border-brand-accent pl-8">
-      <AnimatedQuote
-        client:visible
-        text={quoteText}
-        className="font-poppins font-medium text-xl md:text-2xl text-brand-accent leading-snug"
-      />
-    </blockquote>
+    <!-- Paragraphs — full width -->
+    <div class="space-y-5 font-inter text-base leading-relaxed" style="text-align: justify;">
+      <p style="color: #0A0A0A;">
+        Between us, we have 30+ years running and operating project-based businesses in construction, services, and trades. We've felt the pressure, missed the numbers, and chased the invoices.
+      </p>
+      <p style="color: #0A0A0A;">
+        Then we spent years learning how AI and automation actually work in the real world. Not in a pitch deck. On the floor, with real teams, real resistance, and real change.
+      </p>
+      <p style="color: #5B1FE6; font-style: italic;">
+        That combination is rare. Most tech companies don't understand your business. Most consultants don't understand the technology. We do both.
+      </p>
+    </div>
+
+    <!-- Founder cards — below paragraphs, side by side -->
+    <div class="flex flex-col sm:flex-row gap-6 mt-12">
+      {founders.map((founder) => (
+        <div class="founder-card flex-1 bg-brand-surface rounded-2xl p-10 flex items-center gap-8 cursor-default">
+          <div
+            class="w-24 h-24 rounded-full flex-shrink-0 overflow-hidden"
+            style="box-shadow: 0 0 0 5px rgba(45,27,142,0.12);"
+          >
+            <img
+              src={founder.photo}
+              alt={founder.name}
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <p class="font-poppins font-bold text-3xl text-brand-text mb-2">
+              {founder.name}
+            </p>
+            <p class="font-inter text-base italic text-brand-accent">
+              {founder.role}
+            </p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.9rem; color: #6B6B6B; line-height: 1.6; max-width: 380px; margin-top: 12px;">
+              {founder.bio}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div style="margin-top: 48px; text-align: center;">
+      <a
+        href="#"
+        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/retiply/30min', color: '#5B1FE6', textColor: '#ffffff'}); return false;"
+        style="display: inline-flex; align-items: center; gap: 12px; background: #5B1FE6; color: #ffffff; border-radius: 999px; padding: 14px 14px 14px 28px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; text-decoration: none; cursor: pointer;"
+      >
+        Let's Talk
+        <span style="width: 40px; height: 40px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#5B1FE6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+
 
   </div>
 

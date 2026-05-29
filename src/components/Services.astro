@@ -5,58 +5,59 @@ const services = [
   {
     title: 'Finance & P&L Automation',
     description: 'Know exactly where your money is. Every day. Without touching a spreadsheet.',
-    tags: ['Invoice Automation', 'Job Profitability', 'Cash Flow Visibility'],
-    gradient: 'linear-gradient(135deg, #0f0839 0%, #2D1B8E 100%)',
+    tags: ['Cash Flow Visibility', 'Invoice Automation', 'Job Profitability'],
+    icon: 'finance',
   },
   {
-    title: 'Reports & Dashboards',
+    title: 'Reporting & Dashboards',
     description: 'One screen that shows you everything. Updated automatically. No chasing.',
-    tags: ['Live Dashboards', 'Timesheet Tracking', 'Business Intelligence'],
-    gradient: 'linear-gradient(135deg, #111827 0%, #1e3a5f 100%)',
-  },
-  {
-    title: 'Operations & Job Tracking',
-    description: 'Every job, every person, every milestone — visible in one place without chasing anyone.',
-    tags: ['Job Scheduling', 'Resource Allocation', 'Milestone Tracking', 'Client Updates', 'Progress Reporting'],
-    gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
-  },
-  {
-    title: 'HR Onboarding',
-    description: 'Every new hire set up, equipped, and ready — without anyone managing a checklist manually.',
-    tags: ['Offer Trigger Automation', 'IT Provisioning', 'Document Signing', 'Training Scheduling', '30-60-90 Day Check-ins'],
-    gradient: 'linear-gradient(135deg, #1a0533 0%, #3b0764 100%)',
-  },
-  {
-    title: 'Document Management',
-    description: 'Every document classified, filed, and findable the moment it arrives — with no one touching it.',
-    tags: ['Contract Routing', 'Purchase Orders', 'Compliance Documents', 'Auto-filing', 'Audit Trails'],
-    gradient: 'linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 100%)',
+    tags: ['Business Intelligence', 'Timesheet Tracking', 'Live Dashboards'],
+    icon: 'reporting',
   },
   {
     title: 'Lead Generation & Pipeline',
     description: 'Never lose a lead again. Follow-ups happen automatically. Your team only talks to the hot ones.',
-    tags: ['CRM Setup', 'Automated Outreach', 'Pipeline Tracking'],
-    gradient: 'linear-gradient(135deg, #13002e 0%, #3b0764 100%)',
+    tags: ['CRM Automation', 'Outreach Automation', 'Pipeline Tracking'],
+    icon: 'leadgen',
   },
   {
     title: 'Marketing & Sales Automation',
     description: 'Your sales process runs even when you\'re on site. Quotes go out. Leads get nurtured. Jobs get closed.',
     tags: ['Email Sequences', 'Follow-up Systems', 'Sales Workflows'],
-    gradient: 'linear-gradient(135deg, #0d1117 0%, #1a2234 100%)',
+    icon: 'marketing',
   },
   {
-    title: 'AI Training for Your Team',
-    description: 'We show your staff which AI tools save the most time — and exactly how to use them.',
-    tags: ['Team Training', 'AI Planning', 'Tool Matching'],
-    gradient: 'linear-gradient(135deg, #0a1a0a 0%, #1a3d1a 100%)',
+    title: 'AI Training',
+    description: 'We show your staff which AI tools save the most time and exactly how to use them.',
+    tags: ['Team Workshops', 'AI Roadmapping', 'Tool Selection'],
+    icon: 'ai',
   },
   {
-    title: 'Websites & Web Tools',
+    title: 'Frontend Experience',
     description: 'Pages that bring in leads and tools that make your team\'s job easier.',
-    tags: ['Custom Web Apps', 'Interactive Demos', 'Landing Pages'],
-    gradient: 'linear-gradient(135deg, #1a0a0f 0%, #3a1429 100%)',
+    tags: ['Custom Web Apps', 'Landing Pages', 'Interactive Demos'],
+    icon: 'frontend',
   },
 ];
 ---
 
 <ServicesGrid client:visible cards={services} />
+
+<style is:global>
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+  .service-card:hover {
+    border-color: rgba(91,31,230,0.3) !important;
+  }
+  .service-card:hover .service-card-icon {
+    background: rgba(91,31,230,0.15) !important;
+  }
+</style>

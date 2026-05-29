@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Privacy Policy — Retiply" description="Retiply privacy policy. How we collect, use, and protect your data.">
+  <Nav />
+
+  <main style="background: #E8E4DF;">
+    <div class="privacy-wrapper">
+      <h1 style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: clamp(1.75rem, 4vw, 3rem); color: #0A0A0A; line-height: 1.1; margin: 0;">
+        Privacy Policy
+      </h1>
+      <p style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.875rem; color: #6B6B6B; margin-top: 12px; margin-bottom: 48px;">
+        Last updated: 29 May 2026
+      </p>
+
+      <div class="privacy-body">
+
+        <h2>Who we are</h2>
+        <p>Retiply Ltd is an AI automation consultancy based in London, UK. We help growing businesses replace manual work with intelligent systems. When you use our website or work with us, you trust us with your information. We take that seriously.</p>
+        <p>This policy explains what we collect, why we collect it, and what we do with it.</p>
+
+        <h2>What we collect and why</h2>
+
+        <h3>When you get in touch:</h3>
+        <p>If you book a call, fill in a form, or email us directly, we collect the details you provide — typically your name, email address, phone number, and the name of your business. We use this to respond to you, schedule conversations, and deliver our services.</p>
+
+        <h3>When you visit our website:</h3>
+        <p>We collect standard usage data automatically — things like your IP address, browser type, pages visited, and how you arrived at our site. This helps us understand how people use the site and improve it over time.</p>
+
+        <h3>When we communicate:</h3>
+        <p>If you email us or message us directly, we keep a record of that conversation so we can follow up properly and provide consistent service.</p>
+
+        <h2>What we do not do</h2>
+        <p>We do not sell your personal information. We never have and we never will.</p>
+
+        <h2>Who we share data with</h2>
+        <p>We work with a small number of trusted third party tools to run our business — including website hosting, analytics, and call scheduling. These providers only access your data to the extent needed to perform their function. We may also share information where required by law.</p>
+
+        <h2>Cookies</h2>
+        <p>Our website uses cookies. Some are essential for the site to work. Others help us understand how visitors use the site so we can improve it. You can control or disable cookies through your browser settings at any time.</p>
+
+        <h2>Keeping your data safe</h2>
+        <p>We take reasonable technical and organisational steps to protect your information. No system is completely immune to risk, but we treat data security as an ongoing responsibility, not a one-time checkbox.</p>
+
+        <h2>How long we keep your data</h2>
+        <p>We keep your information for as long as it is needed to deliver our services or meet our legal obligations. When it is no longer needed, we delete it.</p>
+
+        <h2>Your rights</h2>
+        <p>You have the right to see the information we hold about you, correct it if it is wrong, or ask us to delete it. You can also withdraw consent for marketing at any time. To do any of these things, email us at <a href="mailto:hello@retiply.ai" style="color: #5B1FE6; text-decoration: none;">hello@retiply.ai</a> and we will respond promptly.</p>
+
+        <h2>Updates to this policy</h2>
+        <p>We will update this policy if our practices change. The date at the top of this page will always reflect the most recent version.</p>
+
+        <h2>Questions</h2>
+        <p>If anything in this policy is unclear, or if you want to exercise any of your rights, contact us at <a href="mailto:hello@retiply.ai" style="color: #5B1FE6; text-decoration: none;">hello@retiply.ai</a>. We are happy to help.</p>
+
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .privacy-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .privacy-body h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0A0A0A;
+    margin-top: 40px;
+    margin-bottom: 12px;
+  }
+
+  .privacy-body h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0A0A0A;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+
+  .privacy-body p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #1C1C1E;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+
+  @media (max-width: 768px) {
+    .privacy-wrapper {
+      padding: 48px 16px;
+    }
+  }
+</style>

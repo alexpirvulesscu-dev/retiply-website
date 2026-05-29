@@ -1,19 +1,22 @@
 ---
 const testimonials = [
   {
-    quote: `Our finance team was drowning in manual reports every week. Now we got 14 hours back and I could finally see the numbers clearly enough to make fast decisions. In construction, that speed matters and it's been a game changer for us.`,
-    name: 'Doina',
+    stat: '14 hrs given back per week',
+    quote: `I used to spend hours every week making sure our financial data was right. Chasing numbers, checking spreadsheets, going back and forth. Now it just happens. I always know where we stand and I can make decisions without second guessing myself. In construction, that speed matters more than people realise.`,
+    name: 'Daniel',
     company: 'Socend Construct',
   },
   {
-    quote: `We used to have no visibility, no projections, just constant fires to put out. We now have a cash flow system our team never would have had time to build. Now I can see 30, 60, 90 days ahead. I spot problems before they become a crisis. Every decision I make now has real numbers behind it.`,
-    name: 'Radu',
+    stat: '90 days of cash flow visibility',
+    quote: `We were always busy but never really in control. No visibility, no projections, just reacting to whatever came up next. What they built gave us a cash flow system we never would have had time to build ourselves. Now I can see 30, 60, 90 days ahead. I spot problems before they become a crisis. Every decision I make now has real numbers behind it.`,
+    name: 'Nick',
     company: 'Aton Grid',
   },
   {
-    quote: `The cost of living crisis hit hard. Patients were leaving and I didn't know how to stop it. I decided to finally trust a lead gen system and I'm glad I did. I had to pause it after the first month — not because it didn't work, but because it worked too well. I got 40 new recurring patients and a fully booked calendar. I wasn't ready for that.`,
-    name: 'Cristina',
-    company: 'Dentist',
+    stat: '30+ new patients in 3 months',
+    quote: `I was sceptical. The thing that got me to try it was the money back guarantee. I had nothing to lose. Within three months we had 30 new patients through the door. I hadn't changed anything else in the business. Just the lead gen system they built.`,
+    name: 'Christina',
+    company: 'London Dental Practice',
   },
 ];
 ---
@@ -23,10 +26,10 @@ const testimonials = [
 
     <!-- Heading -->
     <div class="mb-14">
-      <p class="section-label">What clients say</p>
-      <h2 class="font-inter font-bold text-2xl md:text-3xl text-brand-text leading-tight">
-        In their own words.
+      <h2 class="font-inter font-bold text-brand-text" style="font-size: clamp(1.75rem, 4vw, 3rem); line-height: 1.1; margin: 0;">
+        What Clients Say
       </h2>
+      <p style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1rem; color: #6B6B6B; margin-top: 12px;">In their own words.</p>
     </div>
 
     <!-- Testimonial cards -->
@@ -35,8 +38,15 @@ const testimonials = [
         <div class="bg-brand-bg rounded-2xl p-8 flex flex-col justify-between">
           <!-- Quote mark -->
           <div>
-            <span class="font-poppins text-5xl text-brand-accent leading-none select-none">"</span>
-            <p class="font-inter text-brand-text text-base leading-relaxed mt-2 italic">
+            <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="#0A5CF5"><path d="M8 0l2.47 4.94L16 5.76l-4 3.86.94 5.48L8 12.68 3.06 15.1 4 9.62 0 5.76l5.53-.82z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="#0A5CF5"><path d="M8 0l2.47 4.94L16 5.76l-4 3.86.94 5.48L8 12.68 3.06 15.1 4 9.62 0 5.76l5.53-.82z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="#0A5CF5"><path d="M8 0l2.47 4.94L16 5.76l-4 3.86.94 5.48L8 12.68 3.06 15.1 4 9.62 0 5.76l5.53-.82z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="#0A5CF5"><path d="M8 0l2.47 4.94L16 5.76l-4 3.86.94 5.48L8 12.68 3.06 15.1 4 9.62 0 5.76l5.53-.82z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="#0A5CF5"><path d="M8 0l2.47 4.94L16 5.76l-4 3.86.94 5.48L8 12.68 3.06 15.1 4 9.62 0 5.76l5.53-.82z"/></svg>
+            </div>
+            <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.25rem; color: #0A0A0A; display: block; margin-bottom: 16px;">{t.stat}</span>
+            <p class="font-inter text-brand-text text-base leading-relaxed italic" style="margin: 0;">
               {t.quote}
             </p>
           </div>

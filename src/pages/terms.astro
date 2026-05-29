@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Terms of Service — Retiply" description="Retiply terms of service. How we work together.">
+  <Nav />
+
+  <main style="background: #E8E4DF;">
+    <div class="terms-wrapper">
+      <h1 style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: clamp(1.75rem, 4vw, 3rem); color: #0A0A0A; line-height: 1.1; margin: 0;">
+        Terms of Service
+      </h1>
+      <p style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.875rem; color: #6B6B6B; margin-top: 12px; margin-bottom: 48px;">
+        Last updated: 29 May 2026
+      </p>
+
+      <div class="terms-body">
+
+        <h2>Working with us</h2>
+        <p>These terms set out how we work together. When you engage Retiply Ltd to deliver a project or service, you are agreeing to what is written here. Please read it before we start. If anything is unclear, ask us — we would rather talk it through than have a misunderstanding later.</p>
+
+        <h2>What we deliver</h2>
+        <p>Retiply Ltd provides AI automation, workflow design, systems implementation, and related consulting services to businesses. The specific work we do for you, including scope, timeline, and price, is agreed in writing before any project begins. Nothing starts until both sides are clear on what is being built and what it costs.</p>
+
+        <h2>What we need from you</h2>
+        <p>For us to do our best work, we ask that you provide accurate and complete information about your business and the problem we are solving; give us reasonable access to the systems, data, and people needed to deliver the work; respond to questions and decisions within agreed timeframes; and nominate one person on your side as the main point of contact throughout the engagement.</p>
+        <p>Delays caused by late responses or incomplete information may affect timelines. We will always flag this before it becomes a problem.</p>
+
+        <h2>Ownership of work</h2>
+        <p>Any custom system, automation, or tool built specifically for your business becomes yours once full payment has been received.</p>
+        <p>Tools, frameworks, processes, and methodologies we have developed independently remain ours. We retain the right to apply general knowledge and experience gained during any engagement to future client work, provided we do not disclose your confidential information in doing so.</p>
+
+        <h2>Payment</h2>
+        <p>Payment terms are set out in your individual service agreement. We invoice as agreed and expect payment within the timeframe specified. Overdue invoices may attract interest. We reserve the right to pause work on active projects where invoices remain unpaid beyond the agreed terms.</p>
+
+        <h2>Confidentiality</h2>
+        <p>Anything you share with us about your business, your systems, or your operations stays with us. We only share what is strictly necessary to deliver the work, for example with a tool or platform we use to build your automation. We will tell you what those tools are. The same applies in reverse — we expect you to treat anything we share about our methods and processes as confidential. This obligation continues after the engagement ends.</p>
+
+        <h2>Our liability</h2>
+        <p>We take our work seriously and stand behind what we build. If something goes wrong as a direct result of our work, we will do everything reasonable to put it right.</p>
+        <p>That said, our total liability for any claim related to a project shall not exceed the total fees paid by you in the twelve months preceding that claim. We are not liable for indirect losses, lost profits, or consequences outside our reasonable control.</p>
+
+        <h2>Ending an engagement</h2>
+        <p>If either party needs to end an engagement, 30 days notice in writing is all we ask. We will invoice for everything completed up to that point and hand over whatever has been built. If a money back guarantee was part of your agreement, that takes precedence over this clause.</p>
+
+        <h2>Governing law</h2>
+        <p>These terms are governed by the laws of England and Wales. Any disputes that cannot be resolved between us will be referred to the courts of England and Wales.</p>
+
+        <h2>Updates</h2>
+        <p>We may update these terms from time to time. If we make significant changes we will let active clients know. The date at the top of this page reflects the most current version.</p>
+
+        <h2>Questions</h2>
+        <p>If you have any questions about these terms, contact us at <a href="mailto:hello@retiply.ai" style="color: #5B1FE6; text-decoration: none;">hello@retiply.ai</a> before engaging our services. We are straightforward to deal with and happy to clarify anything.</p>
+
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .terms-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .terms-body h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0A0A0A;
+    margin-top: 40px;
+    margin-bottom: 12px;
+  }
+
+  .terms-body p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #1C1C1E;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+
+  @media (max-width: 768px) {
+    .terms-wrapper {
+      padding: 48px 16px;
+    }
+  }
+</style>
