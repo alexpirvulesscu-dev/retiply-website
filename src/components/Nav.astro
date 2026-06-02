@@ -12,11 +12,11 @@ const navLinks = [
   <div class="w-full px-4 md:px-[110px] py-4 flex items-center justify-between gap-3 md:gap-8">
 
     <!-- Logo: left-aligned -->
-    <a href="/" class="flex items-center flex-shrink-0">
+    <a href="/" class="flex items-center flex-shrink-0 relative z-[60]">
       <img src="/logo-horizontal.png" alt="Retiply" class="h-10 md:h-14 w-auto" />
     </a>
 
-    <!-- Centre nav links -->
+    <!-- Centre nav links (desktop only) -->
     <div class="hidden md:flex items-center justify-center flex-1 gap-10">
       {navLinks.map((link) => (
         <a
@@ -28,11 +28,11 @@ const navLinks = [
       ))}
     </div>
 
-    <!-- CTA button: right-aligned, larger -->
+    <!-- CTA button (desktop only) -->
     <a
       href="#"
       onclick={calendlyClick}
-      class="inline-flex items-center gap-2 md:gap-3 bg-brand-accent text-white rounded-full pl-4 md:pl-6 pr-1.5 md:pr-2 py-1.5 md:py-2 font-inter font-semibold text-sm md:text-base hover:bg-brand-accent-light transition-colors duration-200 flex-shrink-0"
+      class="hidden md:inline-flex items-center gap-2 md:gap-3 bg-brand-accent text-white rounded-full pl-4 md:pl-6 pr-1.5 md:pr-2 py-1.5 md:py-2 font-inter font-semibold text-sm md:text-base hover:bg-brand-accent-light transition-colors duration-200 flex-shrink-0"
     >
       Let's talk
       <span class="w-7 h-7 md:w-9 md:h-9 bg-white rounded-full flex items-center justify-center flex-shrink-0">
@@ -42,8 +42,53 @@ const navLinks = [
       </span>
     </a>
 
+    <!-- Hamburger button (mobile only) -->
+    <button
+      id="menu-toggle"
+      class="md:hidden relative z-[60] flex items-center justify-center w-10 h-10"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <!-- Hamburger icon -->
+      <svg id="icon-hamburger" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+      <!-- Close icon (hidden by default) -->
+      <svg id="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" style="display: none;">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </button>
+
   </div>
 </nav>
+
+<!-- Mobile overlay menu -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[55] flex flex-col items-center justify-center bg-brand-bg"
+  style="display: none;"
+>
+  <nav class="flex flex-col items-center gap-10">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class="mobile-menu-link font-inter text-2xl font-semibold text-brand-text hover:text-brand-accent transition-colors duration-200"
+      >
+        {link.label}
+      </a>
+    ))}
+    <a
+      href="#"
+      onclick={calendlyClick}
+      class="mobile-menu-link font-inter text-2xl font-semibold text-brand-accent hover:text-brand-accent-light transition-colors duration-200"
+    >
+      Let's talk
+    </a>
+  </nav>
+</div>
 
 <style>
   #navbar {
@@ -54,6 +99,12 @@ const navLinks = [
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  }
+  #menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
   }
 </style>
 
@@ -68,4 +119,43 @@ const navLinks = [
       }
     });
   }
+
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconHamburger = document.getElementById('icon-hamburger');
+  const iconClose = document.getElementById('icon-close');
+  const menuLinks = document.querySelectorAll('.mobile-menu-link');
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    menu!.style.display = 'flex';
+    iconHamburger!.style.display = 'none';
+    iconClose!.style.display = 'block';
+    toggle!.setAttribute('aria-expanded', 'true');
+    toggle!.setAttribute('aria-label', 'Close menu');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    menu!.style.display = 'none';
+    iconHamburger!.style.display = 'block';
+    iconClose!.style.display = 'none';
+    toggle!.setAttribute('aria-expanded', 'false');
+    toggle!.setAttribute('aria-label', 'Open menu');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    if (isOpen) closeMenu();
+    else openMenu();
+  });
+
+  menuLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
 </script>
