@@ -9,16 +9,16 @@ import { motion } from 'framer-motion';
 
 const problems = [
   {
-    bold: 'Your team copies data between systems by hand',
-    rest: "and you still can't see what's actually profitable.",
-    stat: '1 in 4',
-    qualifier: 'manual entries contain errors',
-  },
-  {
     bold: 'Leads go cold before anyone follows up',
     rest: 'and you lose the sale.',
     stat: '50%',
     qualifier: 'of sales go to first responder',
+  },
+  {
+    bold: 'Your team spends hours processing invoices by hand.',
+    rest: "You still don't know if the business is profitable.",
+    stat: '82%',
+    qualifier: 'of SMEs fail from cash flow',
   },
   {
     bold: 'You price jobs and hire people',

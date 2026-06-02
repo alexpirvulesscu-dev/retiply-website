@@ -100,7 +100,7 @@ export default function ServicesGrid({ cards }) {
           <h2 className="font-inter font-bold text-brand-text" style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', lineHeight: 1.1, margin: 0 }}>
             What We Do
           </h2>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: '1rem', color: '#6B6B6B', marginTop: 12 }}>AI systems built by people who've actually run project-based businesses. We know what breaks, why it breaks, and exactly how to fix it.</p>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: '1rem', color: '#6B6B6B', marginTop: 12 }}>AI systems built by people who've actually run businesses. We have lived the problems we now fix.</p>
         </div>
 
         {/* Card grid */}

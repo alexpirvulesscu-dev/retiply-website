@@ -3,50 +3,195 @@ import AuroraBackground from './AuroraBackground.astro';
 const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/retiply/30min', color: '#5B1FE6', textColor: '#ffffff'}); return false;";
 ---
 
-<section id="hero-section" class="relative overflow-hidden min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-12 bg-brand-bg">
+<section id="hero-section" class="relative overflow-hidden flex flex-col items-center text-center px-6 bg-brand-bg" style="height: 100dvh; max-height: 100dvh;">
   <!-- Aurora background -->
   <AuroraBackground />
 
-  <!-- Dot grid — plain CSS, no React needed -->
+  <!-- Dot grid -->
   <div
     class="absolute inset-0 pointer-events-none"
     style="z-index: 2; background-image: radial-gradient(circle, rgba(0,0,0,0.20) 1px, transparent 1px); background-size: 28px 28px;"
   ></div>
 
-  <div class="relative z-10 w-full max-w-6xl mx-auto mt-10 md:mt-14 px-4">
+  <!-- Three-zone layout: headline+subtitle | CTA | metrics -->
+  <div class="relative z-10 w-full max-w-6xl mx-auto px-4 flex-1 flex flex-col items-center" style="padding-top: 20vh; padding-bottom: 48px;">
 
-    <!-- Main headline -->
-    <h1
-      class="text-4xl md:text-[4rem] lg:text-[5rem] leading-[1.2] tracking-tight"
-      style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #1E0660; margin-bottom: 2cm;"
-    >
-      The <span style="background: #5B1FE6; color: white; border-radius: 0.45em; padding: 0 0.28em; display: inline-block; vertical-align: baseline;">AI automations</span> partner<br />
-      for growing businesses
-    </h1>
+    <!-- Top: headline + subtitle -->
+    <div class="text-center">
+      <h1
+        class="text-4xl md:text-[4rem] lg:text-[5rem] leading-[1.2] tracking-tight"
+        style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #1E0660; margin-bottom: 28px;"
+      >
+        The <span style="background: #5B1FE6; color: white; border-radius: 0.45em; padding: 0 0.28em; display: inline-block; vertical-align: baseline;">AI automations</span> partner<br />
+        for growing businesses
+      </h1>
 
-    <!-- Subheadline -->
-    <p class="font-inter text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed" style="color: #222222; margin-bottom: 2cm;">
-      We find the manual tasks draining your business and build the systems to do them for you.
-    </p>
+      <p class="font-inter text-xl md:text-2xl mx-auto leading-relaxed" style="color: #222222; margin-bottom: 0; max-width: 640px;">
+        We build AI software that helps you generate leads, convert sales, and scale your operations. The difference is we have been on your side of the table.
+      </p>
+    </div>
 
-    <!-- CTA -->
-    <a
-      href="#"
-      onclick={calendlyClick}
-      class="inline-flex items-center gap-3 bg-brand-accent text-white rounded-full pl-6 pr-1.5 py-1.5 font-inter font-medium text-base hover:bg-brand-accent-light transition-colors duration-200"
-    >
-      Let's talk
-      <span class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-    </a>
+    <!-- Middle: CTA + trust note -->
+    <div class="text-center" style="margin-top: auto; margin-bottom: auto;">
+      <a
+        href="#"
+        onclick={calendlyClick}
+        class="inline-flex items-center gap-4 bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+        style="padding: 10px 10px 10px 32px; font-size: 1.2rem;"
+      >
+        Let's talk
+        <span class="bg-white rounded-full flex items-center justify-center flex-shrink-0" style="width: 48px; height: 48px;">
+          <svg width="19" height="19" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <p class="mt-4 text-xs font-inter text-brand-muted tracking-wide">
+        We start with your problem. AI is how we solve it faster.
+      </p>
+    </div>
 
-    <!-- Trust note -->
-    <p class="mt-4 text-xs font-inter text-brand-muted tracking-wide">
-      No sales pitch. No obligation. Just a clear answer.
-    </p>
+    <!-- Bottom: metrics -->
+    <div class="w-full" style="margin-top: auto;">
+    <div class="hero-metrics">
+      <div class="hero-metrics__col" data-index="0">
+        <span class="hero-metrics__number" data-target="14" data-suffix=" hrs">0</span>
+        <span class="hero-metrics__label">given back per week</span>
+        <span class="hero-metrics__attribution">Socend Construct</span>
+      </div>
 
+      <div class="hero-metrics__divider" aria-hidden="true"></div>
+
+      <div class="hero-metrics__col" data-index="1">
+        <span class="hero-metrics__number" data-target="30" data-suffix="+">0</span>
+        <span class="hero-metrics__label">new customers in 3 months</span>
+        <span class="hero-metrics__attribution">London Dental Practice</span>
+      </div>
+
+      <div class="hero-metrics__divider" aria-hidden="true"></div>
+
+      <div class="hero-metrics__col" data-index="2">
+        <span class="hero-metrics__number" data-target="90" data-suffix=" days">0</span>
+        <span class="hero-metrics__label">of cash flow visibility</span>
+        <span class="hero-metrics__attribution">Aton Grid</span>
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  .hero-metrics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 960px;
+    margin: 0 auto;
+    gap: 48px;
+  }
+
+  .hero-metrics__col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .hero-metrics__col.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-metrics__divider {
+    width: 1px;
+    height: 72px;
+    background: #D0CCC6;
+    flex-shrink: 0;
+  }
+
+  .hero-metrics__number {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: #0A0A0A;
+    line-height: 1.1;
+  }
+
+  .hero-metrics__label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.7rem;
+    color: #6B6B6B;
+    margin-top: 4px;
+  }
+
+  .hero-metrics__attribution {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.6rem;
+    font-style: italic;
+    color: #6B6B6B;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .hero-metrics {
+      flex-direction: column;
+      gap: 32px;
+    }
+    .hero-metrics__divider {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function easeOutCubic(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animateCount(el: HTMLElement, target: number, suffix: string, duration: number) {
+    const start = performance.now();
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.round(easeOutCubic(progress) * target);
+      el.textContent = value + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const metricsContainer = document.querySelector('.hero-metrics');
+  if (metricsContainer) {
+    const cols = metricsContainer.querySelectorAll<HTMLElement>('.hero-metrics__col');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+
+          cols.forEach((col, i) => {
+            setTimeout(() => {
+              col.classList.add('visible');
+
+              const numEl = col.querySelector<HTMLElement>('.hero-metrics__number');
+              if (numEl) {
+                const target = parseInt(numEl.dataset.target || '0', 10);
+                const suffix = numEl.dataset.suffix || '';
+                animateCount(numEl, target, suffix, 1200);
+              }
+            }, i * 100);
+          });
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(metricsContainer);
+  }
+</script>
