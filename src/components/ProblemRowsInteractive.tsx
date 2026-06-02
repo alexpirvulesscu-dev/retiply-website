@@ -174,7 +174,7 @@ export default function ProblemRowsInteractive() {
               </div>
 
               {/* Stat block */}
-              <div style={{ flexShrink: 0, textAlign: 'right' }}>
+              <div style={{ flexShrink: 0, textAlign: 'right', maxWidth: 180 }}>
                 <span
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
