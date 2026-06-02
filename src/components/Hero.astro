@@ -51,7 +51,7 @@ const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/reti
     </div>
 
     <!-- Bottom: metrics -->
-    <div class="w-full" style="margin-top: auto;">
+    <div class="w-full hero-metrics-wrap">
     <div class="hero-metrics">
       <div class="hero-metrics__col" data-index="0">
         <span class="hero-metrics__number" data-target="14" data-suffix=" hrs">0</span>
@@ -151,6 +151,10 @@ const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/reti
     padding: 0;
   }
 
+  .hero-metrics-wrap {
+    margin-top: 40px;
+  }
+
   @media (min-width: 768px) {
     .hero-inner {
       padding-top: 20vh;
@@ -165,29 +169,37 @@ const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/reti
       margin-bottom: auto;
       padding: 24px 0;
     }
+    .hero-metrics-wrap {
+      margin-top: auto;
+    }
   }
 
   @media (max-width: 767px) {
+    .hero-inner {
+      justify-content: flex-start;
+    }
     .hero-metrics {
       flex-direction: row;
-      gap: 8px;
+      align-items: flex-start;
+      gap: 4px;
       justify-content: center;
     }
     .hero-metrics__col {
       flex: 1 1 0;
       min-width: 0;
+      align-items: center;
     }
     .hero-metrics__divider {
       display: none;
     }
     .hero-metrics__number {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
     .hero-metrics__label {
-      font-size: 0.6rem;
+      font-size: 0.55rem;
     }
     .hero-metrics__attribution {
-      font-size: 0.5rem;
+      font-size: 0.45rem;
     }
   }
 </style>
