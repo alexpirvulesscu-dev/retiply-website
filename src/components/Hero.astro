@@ -14,33 +14,32 @@ const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/reti
   ></div>
 
   <!-- Three-zone layout: headline+subtitle | CTA | metrics -->
-  <div class="relative z-10 w-full max-w-6xl mx-auto px-4 flex-1 flex flex-col items-center" style="padding-top: 20vh; padding-bottom: 48px;">
+  <div class="relative z-10 w-full max-w-6xl mx-auto px-4 flex-1 flex flex-col items-center hero-inner">
 
     <!-- Top: headline + subtitle -->
     <div class="text-center">
       <h1
-        class="text-4xl md:text-[4rem] lg:text-[5rem] leading-[1.2] tracking-tight"
+        class="text-3xl md:text-[4rem] lg:text-[5rem] leading-[1.15] md:leading-[1.2] tracking-tight"
         style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #1E0660; margin-bottom: 28px;"
       >
         The <span style="background: #5B1FE6; color: white; border-radius: 0.45em; padding: 0 0.28em; display: inline-block; vertical-align: baseline;">AI automations</span> partner<br />
         for growing businesses
       </h1>
 
-      <p class="font-inter text-xl md:text-2xl mx-auto leading-relaxed" style="color: #222222; margin-bottom: 0; max-width: 640px;">
+      <p class="font-inter text-base md:text-2xl mx-auto leading-relaxed" style="color: #222222; margin-bottom: 0; max-width: 640px;">
         We build AI software that helps you generate leads, convert sales, and scale your operations.
       </p>
     </div>
 
     <!-- Middle: CTA + trust note -->
-    <div class="text-center" style="margin-top: auto; margin-bottom: auto;">
+    <div class="text-center" style="margin-top: auto; margin-bottom: auto; padding: 24px 0;">
       <a
         href="#"
         onclick={calendlyClick}
-        class="inline-flex items-center gap-4 bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
-        style="padding: 10px 10px 10px 32px; font-size: 1.2rem;"
+        class="inline-flex items-center gap-3 md:gap-4 bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200 hero-cta-btn"
       >
         Let's talk
-        <span class="bg-white rounded-full flex items-center justify-center flex-shrink-0" style="width: 48px; height: 48px;">
+        <span class="bg-white rounded-full flex items-center justify-center flex-shrink-0 w-10 h-10 md:w-12 md:h-12">
           <svg width="19" height="19" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M8.5 4 12 8l-3.5 4" stroke="#2D1B8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -137,13 +136,45 @@ const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/reti
     margin-top: 2px;
   }
 
+  .hero-inner {
+    padding-top: 12vh;
+    padding-bottom: 24px;
+  }
+
+  .hero-cta-btn {
+    padding: 8px 8px 8px 24px;
+    font-size: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-inner {
+      padding-top: 20vh;
+      padding-bottom: 48px;
+    }
+    .hero-cta-btn {
+      padding: 10px 10px 10px 32px;
+      font-size: 1.2rem;
+    }
+  }
+
   @media (max-width: 640px) {
     .hero-metrics {
-      flex-direction: column;
-      gap: 32px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .hero-metrics__col {
+      flex: 0 0 calc(50% - 8px);
+    }
+    .hero-metrics__col:nth-child(5) {
+      flex: 0 0 calc(50% - 8px);
     }
     .hero-metrics__divider {
       display: none;
+    }
+    .hero-metrics__number {
+      font-size: 2rem;
     }
   }
 </style>
