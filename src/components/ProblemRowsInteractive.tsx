@@ -197,7 +197,6 @@ export default function ProblemRowsInteractive() {
                     lineHeight: 1.3,
                     display: 'block',
                     marginTop: 4,
-                    whiteSpace: 'nowrap',
                   }}
                 >
                   {p.qualifier}
