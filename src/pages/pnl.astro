@@ -1,0 +1,645 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+
+// Same Calendly popup pattern used across the site
+const calendlyClick = "Calendly.initPopupWidget({url: 'https://calendly.com/retiply/30min', color: '#5B1FE6', textColor: '#ffffff'}); return false;";
+
+// Problem section — "the old way" pain points
+const oldWay = [
+  'You chase invoices and update spreadsheets by hand',
+  'Your real profit is always weeks out of date',
+  'You find out a job lost money once it\'s too late to act',
+  'Every month-end is a scramble to work out what actually happened',
+];
+
+// Differentiators — 2x2 grid
+const differentiators = [
+  {
+    title: 'Built around your business',
+    body: 'Not off-the-shelf. We shape it to your projects, clients, sites and cost centres.',
+  },
+  {
+    title: 'Run by operators, not just techies',
+    body: "30+ years running real businesses. We've lived the problems we fix.",
+  },
+  {
+    title: 'The AI does the data entry',
+    body: 'You drop a file in a folder. AI reads it, categorises it and files it. No manual bookkeeping.',
+  },
+  {
+    title: 'Always current',
+    body: 'Your dashboard and P&L update in seconds, not at month-end.',
+  },
+];
+
+// How it works — 3 steps
+const steps = [
+  {
+    number: '01',
+    title: 'You drop it in',
+    description: "Drag an invoice or receipt into one folder. That's the whole job.",
+  },
+  {
+    number: '02',
+    title: 'The AI does the rest',
+    description: 'It reads every detail, tags it to the right project and cost centre, and files it. No manual entry.',
+  },
+  {
+    number: '03',
+    title: 'Your numbers go live',
+    description: 'Revenue, costs, profit, VAT and full P&L update the instant a record lands.',
+  },
+];
+
+---
+
+<BaseLayout
+  title="P&L Automation | Retiply"
+  description="We build you a financial system that pulls every invoice, tags every cost, and updates your profit the instant a record lands. Live in under 10 working days."
+>
+  <div style="background-color: #F6F4F9;">
+
+    <!-- Mark JS as active before sections paint, so scroll-reveal never flashes and no-JS users still see all content -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    <!-- Header: logo left, CTA right -->
+    <header class="w-full px-6 md:px-[110px] py-6 flex items-center justify-between gap-4">
+      <a href="/" class="inline-flex items-center">
+        <img src="/logo-horizontal.png" alt="Retiply" class="h-10 md:h-12 w-auto" />
+      </a>
+      <a
+        href="#"
+        onclick={calendlyClick}
+        class="hidden sm:inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+        style="padding: 10px 22px; font-size: 0.95rem;"
+      >
+        Book a free 30-minute discovery call
+      </a>
+    </header>
+
+    <main>
+
+      <!-- 1. Hero — split: copy left, dashboard right, centred to fit the fold -->
+      <section class="px-6 md:px-12 lg:px-[110px] py-10 lg:py-0 lg:flex lg:items-center lg:min-h-[calc(100vh-188px)]">
+        <div class="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <!-- LEFT: copy -->
+          <div class="text-left">
+            <span class="font-inter font-semibold text-xs md:text-sm tracking-[0.12em] uppercase text-brand-muted">
+              Built by people who've run real businesses
+            </span>
+
+            <h1
+              class="mt-5 text-[2.25rem] md:text-[3rem] lg:text-[3.25rem] tracking-tight"
+              style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.1;"
+            >
+              See your real profit any day you want, with almost none of the work.
+            </h1>
+
+            <p class="mt-5 max-w-xl font-inter text-lg md:text-xl leading-relaxed" style="color: #6B6B6B;">
+              Just drag an invoice into a folder. AI reads it, categorises it, and updates your
+              live P&amp;L in seconds. A system built around how your business actually runs.
+            </p>
+
+            <div class="mt-8">
+              <a
+                href="#"
+                onclick={calendlyClick}
+                class="inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+                style="padding: 14px 30px; font-size: 1.05rem;"
+              >
+                Book a free 30-minute discovery call
+              </a>
+            </div>
+
+            <p class="mt-5 flex items-center gap-2.5 font-inter font-bold text-lg md:text-xl leading-relaxed" style="color: #0A0A0A;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-shrink-0">
+                <circle cx="12" cy="12" r="11" fill="#5B1FE6" />
+                <path d="M7 12.5 10.5 16 17 8.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>Free call. And a <span style="color: #5B1FE6;">money-back guarantee</span> on every build.</span>
+            </p>
+          </div>
+
+          <!-- RIGHT: static dashboard image, flush in a rounded card -->
+          <div class="rounded-2xl overflow-hidden" style="box-shadow: 0 30px 60px -22px rgba(0,0,0,0.28); line-height: 0;">
+            <img
+              src="/pnl/dashboard.png"
+              alt="Retiply live P&amp;L dashboard showing profit, job margins, and cash flow"
+              class="block w-full h-auto"
+              loading="eager"
+            />
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Social proof strip — full-width band, three check-circle items -->
+      <section class="px-6 md:px-12 lg:px-[110px] py-6 border-y border-black/5">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-12 font-inter text-base md:text-lg" style="color: #4A4A4A;">
+          <span class="inline-flex items-center gap-2.5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-shrink-0">
+              <circle cx="12" cy="12" r="11" fill="#5B1FE6" />
+              <path d="M7 12.5 10.5 16 17 8.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span><strong style="color: #5B1FE6; font-weight: 700;">£40k</strong> saved, Aton Grid</span>
+          </span>
+          <span class="inline-flex items-center gap-2.5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-shrink-0">
+              <circle cx="12" cy="12" r="11" fill="#5B1FE6" />
+              <path d="M7 12.5 10.5 16 17 8.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span><strong style="color: #5B1FE6; font-weight: 700;">14 hrs/week</strong> back, Socend</span>
+          </span>
+          <span class="inline-flex items-center gap-2.5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-shrink-0">
+              <circle cx="12" cy="12" r="11" fill="#5B1FE6" />
+              <path d="M7 12.5 10.5 16 17 8.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Built for you</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- Social proof — testimonials + credibility, consolidated here -->
+      <section class="px-6 md:px-[110px] py-20 md:py-28">
+        <div class="max-w-7xl mx-auto">
+          <h2
+            class="text-center text-[1.75rem] md:text-[2.75rem]"
+            style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.15;"
+          >
+            What this looks like in practice
+          </h2>
+
+          <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Card 1 — testimonial -->
+            <div class="bg-white rounded-2xl p-8 border border-black/5 flex flex-col" style="box-shadow: 0 14px 34px -16px rgba(0,0,0,0.14);">
+              <p class="font-inter text-lg leading-relaxed mb-8" style="color: #2A2A2A;">
+                “We caught a job running at a loss in month two and renegotiated the remaining works
+                back to breakeven. That saved us around £40,000 we'd never have seen coming until handover.”
+              </p>
+              <div class="mt-auto">
+                <p class="font-poppins font-semibold" style="color: #0A0A0A;">Nick, Aton Grid</p>
+                <p class="font-inter text-sm font-bold mt-1" style="color: #5B1FE6;">£40,000 saved</p>
+              </div>
+            </div>
+
+            <!-- Card 2 — testimonial -->
+            <div class="bg-white rounded-2xl p-8 border border-black/5 flex flex-col" style="box-shadow: 0 14px 34px -16px rgba(0,0,0,0.14);">
+              <p class="font-inter text-lg leading-relaxed mb-8" style="color: #2A2A2A;">
+                “I used to spend hours every week making sure our financial data was right.
+                Now it just happens, and I always know where we stand.”
+              </p>
+              <div class="mt-auto">
+                <p class="font-poppins font-semibold" style="color: #0A0A0A;">Daniel, Socend Construct</p>
+                <p class="font-inter text-sm font-bold mt-1" style="color: #5B1FE6;">14 hours back every week</p>
+              </div>
+            </div>
+
+            <!-- Card 3 — credibility, styled distinctly (no quote, no name) -->
+            <div class="rounded-2xl p-8 flex flex-col border" style="background-color: rgba(91,31,230,0.06); border-color: rgba(91,31,230,0.18); box-shadow: 0 14px 34px -16px rgba(91,31,230,0.16);">
+              <span class="inline-flex items-center justify-center rounded-full mb-5 flex-shrink-0" style="width: 46px; height: 46px; background-color: #5B1FE6;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 12.5 10 16.5 18 7.5" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <h3 class="text-xl md:text-2xl leading-snug" style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A;">
+                Built by people who've run real businesses
+              </h3>
+              <p class="mt-3 font-inter text-base leading-relaxed" style="color: #4A4A4A;">
+                30+ years across operations, finance and growth. We've lived the problems we fix.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-12 text-center">
+            <a
+              href="#"
+              onclick={calendlyClick}
+              class="inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+              style="padding: 14px 30px; font-size: 1.05rem;"
+            >
+              Book a free 30-minute discovery call
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Problem -->
+      <section class="px-6 md:px-[110px] pt-8 md:pt-10 pb-20 md:pb-28">
+        <div class="max-w-5xl mx-auto text-center">
+          <h2
+            class="mx-auto max-w-4xl text-[1.75rem] md:text-[2.5rem]"
+            style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.15;"
+          >
+            Your accounts keep you compliant. They don't tell you if you're making money.
+          </h2>
+
+          <!-- Lead line -->
+          <p class="mt-4 mx-auto max-w-3xl font-inter text-lg md:text-xl leading-relaxed" style="color: #6B6B6B;">
+            You're making weekly decisions on numbers that are weeks out of date.
+          </p>
+
+          <!-- Two cards side by side, equal height -->
+          <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch text-left">
+
+            <!-- The old way -->
+            <div class="h-full bg-white rounded-2xl border border-black/5 p-7 md:p-8" style="box-shadow: 0 14px 34px -18px rgba(0,0,0,0.12);">
+              <p class="font-inter font-semibold text-xs tracking-[0.12em] uppercase" style="color: #9A95A1;">
+                The old way
+              </p>
+              <ul class="mt-5 flex flex-col gap-3.5">
+                {oldWay.map((item) => (
+                  <li class="flex items-start gap-3">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="flex-shrink-0 mt-1">
+                      <path d="M4 4l8 8M12 4l-8 8" stroke="#C0564B" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                    <span class="font-inter text-base md:text-lg leading-relaxed" style="color: #5A5560;">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- The Retiply way -->
+            <div class="h-full flex flex-col rounded-2xl p-7 md:p-8" style="background-color: rgba(91,31,230,0.05); border-left: 3px solid #5B1FE6;">
+              <p class="flex items-center gap-2 font-inter font-semibold text-xs tracking-[0.12em] uppercase" style="color: #6B6B6B;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="flex-shrink-0">
+                  <path d="M3.5 8.5 7 12l5.5-7" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                The Retiply way
+              </p>
+              <p class="mt-3 font-inter text-lg md:text-xl font-semibold leading-relaxed" style="color: #0A0A0A;">
+                With Retiply, you drop a file in a folder and your profit updates in seconds,
+                so you catch problems while you can still fix them.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-8">
+            <a
+              href="#"
+              onclick={calendlyClick}
+              class="inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+              style="padding: 14px 30px; font-size: 1.05rem;"
+            >
+              Book a free 30-minute discovery call
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. How it works — split: video left, steps right -->
+      <section class="px-6 md:px-[110px] py-20 md:py-28">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <!-- LEFT: explainer video with poster + purple play button -->
+          <button
+            id="video-open"
+            type="button"
+            aria-label="Play explainer video"
+            class="group relative block rounded-2xl overflow-hidden cursor-pointer leading-none w-full"
+            style="box-shadow: 0 30px 60px -22px rgba(0,0,0,0.28);"
+          >
+            <img
+              src="/pnl/dashboard.png"
+              alt="Retiply explainer — live P&amp;L dashboard"
+              class="block w-full h-auto"
+              loading="lazy"
+            />
+            <span class="absolute inset-0 flex items-center justify-center">
+              <span
+                class="flex items-center justify-center rounded-full shadow-xl transition-transform duration-200 group-hover:scale-110"
+                style="width: 72px; height: 72px; background-color: #5B1FE6;"
+              >
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </span>
+          </button>
+
+          <!-- RIGHT: benefit lead, steps, CTA -->
+          <div>
+            <h2
+              class="text-[1.6rem] md:text-[2.25rem] tracking-tight"
+              style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.15;"
+            >
+              Almost none of the work. All of the visibility.
+            </h2>
+
+            <p class="mt-3 font-inter text-base md:text-lg leading-relaxed" style="color: #6B6B6B;">
+              You handle the 30 seconds of dropping a file in. The AI handles everything after.
+            </p>
+
+            <div class="mt-8 flex flex-col gap-8">
+              {steps.map((step) => (
+                <div class="flex items-start gap-5">
+                  <span
+                    class="flex-shrink-0 flex items-center justify-center rounded-full font-poppins font-bold"
+                    style="width: 44px; height: 44px; background-color: rgba(91,31,230,0.10); color: #5B1FE6; font-size: 1rem;"
+                  >
+                    {step.number}
+                  </span>
+                  <div>
+                    <h3 class="font-poppins font-semibold text-xl leading-snug" style="color: #0A0A0A;">
+                      {step.title}
+                    </h3>
+                    <p class="mt-2 font-inter text-base leading-relaxed" style="color: #6B6B6B;">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- CTA -->
+            <div class="mt-10">
+              <a
+                href="#"
+                onclick={calendlyClick}
+                class="inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+                style="padding: 14px 30px; font-size: 1.05rem;"
+              >
+                Book a free 30-minute discovery call
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Video lightbox — opened by the play button (vanilla JS) -->
+      <div
+        id="video-lightbox"
+        class="fixed inset-0 z-[100] items-center justify-center p-4"
+        style="display: none; background: rgba(0,0,0,0.8);"
+      >
+        <div class="relative w-[80vw] max-w-[900px]">
+          <button
+            id="video-close"
+            type="button"
+            aria-label="Close video"
+            class="absolute -top-11 right-0 flex items-center justify-center w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <line x1="6" y1="6" x2="18" y2="18" />
+              <line x1="18" y1="6" x2="6" y2="18" />
+            </svg>
+          </button>
+          <video
+            id="lightbox-video"
+            controls
+            playsinline
+            preload="none"
+            poster="/pnl/dashboard.png"
+            class="w-full rounded-xl block bg-black"
+            style="max-height: 80vh;"
+          >
+            <source src="/pnl/explainer.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <!-- Differentiators — 2x2 grid -->
+      <section class="px-6 md:px-[110px] py-20 md:py-28">
+        <div class="max-w-4xl mx-auto">
+          <h2
+            class="mx-auto max-w-2xl text-center text-[1.75rem] md:text-[2.5rem]"
+            style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.15;"
+          >
+            Why this works when spreadsheets and software don't
+          </h2>
+
+          <div class="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {differentiators.map((card) => (
+              <div class="bg-white rounded-2xl p-7 md:p-8 border border-black/5" style="box-shadow: 0 14px 34px -18px rgba(0,0,0,0.12);">
+                <span class="flex items-center justify-center rounded-lg flex-shrink-0" style="width: 38px; height: 38px; background-color: rgba(91,31,230,0.10);">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M4 10.5 8.5 15 16 5.5" stroke="#5B1FE6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <h3 class="mt-5 font-poppins font-semibold text-lg md:text-xl leading-snug" style="color: #0A0A0A;">
+                  {card.title}
+                </h3>
+                <p class="mt-2 font-inter text-base leading-relaxed" style="color: #6B6B6B;">
+                  {card.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Guarantee — distinct contained promise -->
+      <section class="px-6 md:px-[110px] py-20 md:py-28">
+        <div
+          class="max-w-2xl mx-auto rounded-2xl p-8 md:p-12 text-center"
+          style="background-color: rgba(91,31,230,0.05); border: 1px solid rgba(91,31,230,0.18); box-shadow: 0 18px 44px -22px rgba(91,31,230,0.18);"
+        >
+          <!-- Label with shield accent -->
+          <p class="flex items-center justify-center gap-2 font-poppins font-bold text-sm tracking-[0.06em] uppercase" style="color: #5B1FE6;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-shrink-0">
+              <path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 7.6 7.5 9 4.3-1.4 7.5-4.4 7.5-9v-6L12 2.5Z" stroke="#5B1FE6" stroke-width="1.8" stroke-linejoin="round" />
+              <path d="M8.5 12 11 14.5 15.5 9.5" stroke="#5B1FE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Money-back guarantee
+          </p>
+
+          <h2
+            class="mt-5 text-[1.5rem] md:text-[2rem] tracking-tight"
+            style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.2;"
+          >
+            We agree exactly what your automation will do before we build it.
+            If it doesn't do that, you get your money back.
+          </h2>
+
+          <p class="mt-4 mx-auto max-w-xl font-inter text-base leading-relaxed" style="color: #6B6B6B;">
+            We define the scope together in writing: what it automates, what the platform shows,
+            how it works. If we don't deliver exactly that, you get a full refund.
+          </p>
+
+          <!-- CTA -->
+          <div class="mt-8">
+            <a
+              href="#"
+              onclick={calendlyClick}
+              class="inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+              style="padding: 14px 30px; font-size: 1.05rem;"
+            >
+              Book a free 30-minute discovery call
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Final closing CTA -->
+      <section class="px-6 md:px-[110px] py-24 md:py-32">
+        <div class="max-w-3xl mx-auto text-center">
+          <span class="font-inter font-semibold text-xs md:text-sm tracking-[0.12em] uppercase text-brand-muted">
+            Built by people who've run real businesses
+          </span>
+
+          <h2
+            class="mt-5 mx-auto max-w-2xl text-[2rem] md:text-[3rem] tracking-tight"
+            style="font-family: 'DM Sans', sans-serif; font-weight: 700; color: #0A0A0A; line-height: 1.12;"
+          >
+            Know your real profit, starting in 10 working days.
+          </h2>
+
+          <!-- Recap value points -->
+          <div class="mt-9 flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-x-7 gap-y-3 font-inter text-base" style="color: #4A4A4A;">
+            {[
+              'Your real profit, up to date every day',
+              'Almost none of the work, the AI does the data entry',
+              'Built around your business, not off-the-shelf',
+            ].map((point) => (
+              <span class="inline-flex items-center gap-2.5">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="flex-shrink-0">
+                  <circle cx="12" cy="12" r="11" fill="#5B1FE6" />
+                  <path d="M7 12.5 10.5 16 17 8.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>{point}</span>
+              </span>
+            ))}
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-10">
+            <a
+              href="#"
+              onclick={calendlyClick}
+              class="inline-flex items-center bg-brand-accent text-white rounded-full font-inter font-medium hover:bg-brand-accent-light transition-colors duration-200"
+              style="padding: 14px 30px; font-size: 1.05rem;"
+            >
+              Book a free 30-minute discovery call
+            </a>
+          </div>
+
+          <p class="mt-6 font-inter text-sm" style="color: #888888;">
+            Free. Confidential. 30 minutes. You'll leave knowing exactly what we'd fix first.
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  /* Scroll reveal — hidden initial state only when JS is active, so no-JS users see everything */
+  .js main > section > div {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
+  }
+  .js main > section > div.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Gentle hover lift — cards */
+  @media (hover: hover) {
+    .bg-white.rounded-2xl {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .bg-white.rounded-2xl:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 48px -20px rgba(0, 0, 0, 0.18) !important;
+    }
+
+    /* Gentle hover lift — buttons (keep the existing purple deepen animating too) */
+    a.bg-brand-accent {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    a.bg-brand-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -12px rgba(91, 31, 230, 0.5);
+    }
+  }
+
+  /* Respect reduced-motion: no reveal offset, no hover movement */
+  @media (prefers-reduced-motion: reduce) {
+    .js main > section > div {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .bg-white.rounded-2xl:hover,
+    a.bg-brand-accent:hover {
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Explainer video lightbox — open from the play button, close on backdrop / X / Escape
+  const openBtn = document.getElementById('video-open');
+  const lightbox = document.getElementById('video-lightbox');
+  const closeBtn = document.getElementById('video-close');
+  const video = document.getElementById('lightbox-video') as HTMLVideoElement | null;
+
+  function openLightbox() {
+    if (!lightbox) return;
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    video?.play().catch(() => {});
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }
+
+  openBtn?.addEventListener('click', openLightbox);
+  closeBtn?.addEventListener('click', closeLightbox);
+
+  // Click on the dark backdrop (but not the video) closes it
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Escape key closes it
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && lightbox.style.display === 'flex') {
+      closeLightbox();
+    }
+  });
+
+  // Scroll reveal — fade + gentle slide-up once, as each section's content enters view
+  const revealEls = document.querySelectorAll('main > section > div');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    revealEls.forEach((el) => revealObserver.observe(el));
+  } else {
+    // No observer support — show everything immediately
+    revealEls.forEach((el) => el.classList.add('is-visible'));
+  }
+</script>
