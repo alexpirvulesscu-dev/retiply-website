@@ -95,16 +95,22 @@ const CLIENTS = ["Retiply"];
 
 const UPDATES = [
   {
+    id: 2,
+    date: "2026-11-20",
+    title: "New P&L promo video",
+    desc: "The video on the P&L page is replaced with the new promo video, and the new app screenshot is the image people see before pressing play. The rest of the page colours are unchanged for now.",
+    clients: "all",
+    status: { "Retiply": [false, false, false] },
+    action: ["Check the preview link for the branch pnl-new-promo-video once it is pushed"]
+  },
+  {
     id: 1,
     date: "2026-11-19",
     title: "New photo of Ana",
     desc: "Ana's photo in the founders section of the homepage is replaced with a newer one, cropped to sit well in the round frame.",
     clients: "all",
-    status: { "Retiply": [true, true, false] },
-    action: [
-      "Run the push command Claude gave you to send main to GitHub.",
-      "Wait about a minute, then tell Claude so it can check retiply.ai."
-    ]
+    status: { "Retiply": [true, true, true] },
+    action: []
   }
 ];
 /* ================= EDIT ABOVE THIS LINE ================= */
